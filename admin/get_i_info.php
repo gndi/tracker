@@ -27,8 +27,16 @@ $made_by = $row['made_by'];
 $id = $row['id'];
 $is_done = $row['is_done'];
   $due_date = $row['due_date'];
-echo '
-<div id="collapse'.$id.'" class="collapse" aria-labelledby="heading'.$id.'e" data-parent="#accordionExample">
+echo '<div class="card">
+    <div class="card-header" id="heading'.$id.'">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse'.$id.'" aria-expanded="true" aria-controls="collapseOne">
+          '.$date.' in '.$time.' From : '.getmanager_name($db,$made_by).'
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapse'.$id.'" class="collapse" aria-labelledby="heading'.$id.'e" data-parent="#accordionExample">
       <div class="card-body">
         '.$des.'<img src="../'.$img.'" width="auto" height="auto" style="max-width:100%;" />
         <br><br>
