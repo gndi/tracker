@@ -28,7 +28,7 @@ if($login_permission==1 or $login_permission==0){
         left: -50px;
         min-width: 200px;
           font-size:10pt;
-      }
+      
       }
 .modal-backdrop {
     display:none

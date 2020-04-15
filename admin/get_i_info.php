@@ -27,24 +27,37 @@ $made_by = $row['made_by'];
 $id = $row['id'];
 $is_done = $row['is_done'];
 $due_date = $row['due_date'];
-echo '<div class="card">
+echo '<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
 
-    <div id="collapse'.$id.'" class="collapse" aria-labelledby="heading'.$id.'e" data-parent="#accordionExample">
-      <div class="card-body">
-        '.$des.'<img src="../'.$img.'" width="auto" height="auto" style="max-width:100%;" />
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>' . $des . '</p>
+
+        <img src="../' . $img . '" width="auto" height="auto" style="max-width:100%;" />
         <br><br>
         
-        <p>Made by: '.$made_by.'</p>
-        <p>Due date: '.$due_date. '</p>
+        <p>Made by: ' . $made_by . '</p>
+        <p>Due date: ' . $due_date . '</p>
         <p>Status: ' . $is_done . '</p>
       </div>
-    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-        <button class="btn btn-primary" type="button" onclick="updateissue('.$id.')">
+
+        <button class="btn btn-primary" type="button" onclick="updateissue(' . $id . ')">
         Mark as complete
         </button>
-
-  </div>';
+        </div>
+    </div>
+  </div>
+</div>';
 
 
 }
