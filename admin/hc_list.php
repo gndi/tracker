@@ -337,7 +337,7 @@ if ($login_permission == 1 or $login_permission == 0) {
       };
       xhr.send();
     }
-    
+
     closer.onclick = function() {
       overlay.setPosition(undefined);
       closer.blur();
@@ -389,7 +389,7 @@ if ($login_permission == 1 or $login_permission == 0) {
       var cookie;
       cookie = getCookie('cookie');
 
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/update_issue?cookie=' + cookie + '&id=' + id, true);
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/update_issue.php?cookie=' + cookie + '&id=' + id, true);
       xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return;
         if (this.status !== 200) return; // or whatever error handling you want
