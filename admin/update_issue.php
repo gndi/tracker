@@ -17,7 +17,7 @@ mysqli_query($db,"set names utf8");
 
 // update issues set is_done = 1 where id = 10;
 $q = "update issues set is_done = 1 where id=$id ;";
-mysqli_query($db,$q, "set names utf8");
+mysqli_query($db,$q);
 
 ?>
 
