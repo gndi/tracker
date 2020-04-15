@@ -26,7 +26,7 @@ $img =$row['img'];
 $made_by = $row['made_by'];
 $id = $row['id'];
 $is_done = $row['is_done'];
-  $due_date = $row['due_date'];
+$due_date = $row['due_date'];
 echo '<div class="card">
     <div class="card-header" id="heading'.$id.'">
       <h5 class="mb-0">

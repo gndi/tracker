@@ -28,14 +28,19 @@ $id = $row['id'];
 
 echo '<div class="card text-center" style="max-width:500px;">
 
-<img class="card-img-top" src="../'.$img.'" alt="No Image " >
-<h5 class="card-title">'.$made_by.'</h5>
+<img class="card-img-top" src="../'.$img. '" alt="No Image " >
+<a href="../'.$img.'">Image url</a>
+<h5 class="card-title">'.$made_by. '</h5>
   <div class="card-body">
-
-    '.$des.'
+        <p>Issue description</p>: ' . $des . '
+        <br><br>
+        
+        <p>Made by: ' . $made_by . '</p>
+        <p>Due date: ' . $due_date . '</p>
+        <p>Issue Status: ' . $is_done . '</p>
   </div>
   <div class="card-footer text-muted">
-    '.$date.' at '.$time.'
+    <p> Issue submitted on: '.$date.' at '.$time.'
   </div>
   <div
 </div>';
