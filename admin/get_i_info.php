@@ -47,7 +47,7 @@ echo '<div class="card">
       </div>
     </div>
 
-        <button class="btn btn-link" type="button">
+        <button class="btn btn-submit" type="button" onclick="updateissue('.$id.')">
         Mark as complete
         </button>
 
