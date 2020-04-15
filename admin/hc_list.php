@@ -400,6 +400,23 @@ if ($login_permission == 1 or $login_permission == 0) {
 
     };
 
+    function addissue(id) {
+
+      var xhr = new XMLHttpRequest();
+      var cookie;
+      cookie = getCookie('cookie');
+
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/new_issue.php?cookie=' + cookie + '&id=' + id, true);
+      xhr.onreadystatechange = function() {
+        if (this.readyState !== 4) return;
+        if (this.status !== 200) return; // or whatever error handling you want
+
+      };
+      xhr.send();
+
+
+    };
+
     function getmodal2(id) {
 
       var xhr = new XMLHttpRequest();
@@ -423,6 +440,10 @@ if ($login_permission == 1 or $login_permission == 0) {
 
 
     };
+
+    function getIssueModal(id){
+      
+    }
   </script>
 
 
@@ -442,7 +463,6 @@ if ($login_permission == 1 or $login_permission == 0) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
         </div>
       </div>
     </div>
