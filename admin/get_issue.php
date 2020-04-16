@@ -25,11 +25,13 @@ $des = $row['issue_description'];
 $img =$row['img'];
 $made_by = getmanager_name($db,$row['made_by']);
 $id = $row['id'];
+$abspath = "admin/" . $img;
 
 echo '<div class="card text-center" style="max-width:500px;">
 
+
 <img class="card-img-top" src="../'.$img. '" alt="No Image " >
-<a href="../'.$img.'">Image url</a>
+<a href="../'.$abspath.'">Image url</a>
 <h5 class="card-title">'.$made_by. '</h5>
   <div class="card-body">
         <p>Issue description</p>: ' . $des . '

@@ -75,6 +75,7 @@ while ($row = mysqli_fetch_assoc($result)) {
   </div>
 </div>';
 
+$abspath = "/admin" .$img;
 echo '
 
 <table class="table table-sm">
@@ -109,7 +110,7 @@ echo '
     </tr>
     <tr>
       <th scope="row">image urls</th>
-      <td>'.$img. '</td>
+      <td>' .$img. '</td>
     </tr>
         <tr>
       <th scope="row">Is done</th>

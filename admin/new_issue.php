@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $filename = $uploadfile . $extenstion;
   $img = $filename;
 
-  // echo $filename;
+  echo $filename;
 
   echo "<p>";
 
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $due_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['due_date']))));
       $sql = "INSERT INTO `issues` ( `quarantine_id`, `issue_description`, `img`, `made_by`, `date`, `time`,`due_date`) VALUES ( $id, '$info', '$img', '$user_id', now(), now(),'$due_date')";
     } else {
-      $sql = "INSERT INTO `issues` ( `quarantine_id`, `issue_description`, `img`, `made_by`, `date`, `time`) VALUES ( $id, '$info', '$uploadfile', '$user_id', now(), now())";
+      $sql = "INSERT INTO `issues` ( `quarantine_id`, `issue_description`, `img`, `made_by`, `date`, `time`) VALUES ( $id, '$info', '$img', '$user_id', now(), now())";
     }
 
     $res = mysqli_query($db, $sql);
