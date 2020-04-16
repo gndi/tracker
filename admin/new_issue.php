@@ -39,11 +39,38 @@ function saveimage($fff)
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $info = htmlspecialchars(mysqli_real_escape_string($db, $_POST['description']));
-  if (isset($_POST['myFile'])) {
-    $img = saveimage($_FILES['myFile']['tmp_name']);
+
+  // if (isset($_POST['myFile'])) {
+  //   $img = saveimage($_FILES['myFile']['tmp_name']);
+  // } else {
+  //   $img = 'No image';
+  // }
+
+
+  // $uploaddir = 'img/';
+  // // $uploadfile = $uploaddir + md5(date('Y-m-d H:i:s:u'));
+  // $uploadfile = $uploaddir + $_FILES['myFile']['tmp_name'] + ".jpg";
+  // error_log("the upload file is: \n");
+  // error_log($uploadfile);
+
+
+  $uploaddir = 'img/';
+  $extenstion = ".jpg";
+  $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name']);
+  $filename = $uploadfile . $extenstion;
+  $img = $filename;
+
+  // echo $filename;
+
+  echo "<p>";
+
+  if (move_uploaded_file($_FILES['myFile']['tmp_name'], $filename)) {
+    error_log( "File is valid, and was successfully uploaded.\n");
   } else {
-    $img = 'No image';
+    error_log("Upload failed");
   }
+
+
   if (isset($_POST['due_date'])) {
     $due_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['due_date']))));
   } else {
@@ -57,15 +84,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $due_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['due_date']))));
       $sql = "INSERT INTO `issues` ( `quarantine_id`, `issue_description`, `img`, `made_by`, `date`, `time`,`due_date`) VALUES ( $id, '$info', '$img', '$user_id', now(), now(),'$due_date')";
     } else {
-      $sql = "INSERT INTO `issues` ( `quarantine_id`, `issue_description`, `img`, `made_by`, `date`, `time`) VALUES ( $id, '$info', '$img', '$user_id', now(), now())";
+      $sql = "INSERT INTO `issues` ( `quarantine_id`, `issue_description`, `img`, `made_by`, `date`, `time`) VALUES ( $id, '$info', '$uploadfile', '$user_id', now(), now())";
     }
 
     $res = mysqli_query($db, $sql);
+
+    $sql2 = "INSERT into `images` (`qid`, `img`) values ($id, '$img')";
+    $res2 = mysqli_query($db, $sql2);
+
     if ($res) {
       $success = true;
     } else {
       $success = false;
     }
+
+    if ($res2) {
+      $success = true;
+    } else {
+      $success = false;
+    }
+    error_log($res2);
   }
 }
 
