@@ -13,6 +13,7 @@ function getmanager_name($db, $code)
   return $name;
 };
 
+$username = getmanager_name($db, $_GET['id']);
 $id = mysqli_real_escape_string($db, $_GET['id']);
 mysqli_query($db, "set names utf8");
 
@@ -28,7 +29,10 @@ while ($row = mysqli_fetch_assoc($result)) {
   $id = $row['id'];
   $is_done = $row['is_done'];
   $due_date = $row['due_date'];
-  echo '<div class="modal" tabindex="-1" role="dialog">
+  echo '
+  
+  
+  <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -44,7 +48,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         <img src="../' . $img . '" width="auto" height="auto" style="max-width:100%;" />
         <br><br>
         
-        <p>Made by: ' . $made_by . '</p>
         <p>Due date: ' . $due_date . '</p>
         <p>Status: ' . $is_done . '</p>
       </div>
@@ -78,7 +81,7 @@ echo '
     </tr>
     <tr>
       <th scope="row">Made by</th>
-      <td>'.$made_by.'</td>
+      <td>'.$username.'</td>
     </tr>
         <tr>
       <th scope="row">Description</th>
