@@ -15,9 +15,21 @@ function getmanager_name($db, $code)
 
 $username = getmanager_name($db, $_GET['id']);
 $id = mysqli_real_escape_string($db, $_GET['id']);
+$is_done_q = mysqli_real_escape_string($db, $_GET['is_done']);
 mysqli_query($db, "set names utf8");
 
-$q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = false or is_done is null order by id desc limit 0,10  ;";
+
+if (isset($is_done_q) and $is_done_q = 1) {
+  error_log("i shouldn't be here");
+  $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = true  order by id desc limit 0,10  ;";
+
+}else{
+  error_log("im here");
+  $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = false or is_done is null order by id desc limit 0,10  ;";
+
+}
+// $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = false or is_done is null order by id desc limit 0,10  ;";
+
 $result = mysqli_query($db, $q);
 echo '<div class="accordion" id="accordionExample">';
 while ($row = mysqli_fetch_assoc($result)) {

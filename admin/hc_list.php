@@ -441,8 +441,57 @@ if ($login_permission == 1 or $login_permission == 0) {
 
     };
 
-    function getIssueModal(id){
-      
+
+    function getmodal2(id) {
+
+      var xhr = new XMLHttpRequest();
+      var cookie;
+      cookie = getCookie('cookie');
+
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/get_i_info.php?cookie=' + cookie + '&id=' + id, true);
+      xhr.onreadystatechange = function() {
+        if (this.readyState !== 4) return;
+        if (this.status !== 200) return; // or whatever error handling you want
+        if (this.responseText != old) {
+
+          document.getElementById('modal_body').innerHTML = this.responseText;
+
+          $('#exampleModal').modal('show');
+
+        }
+
+      };
+      xhr.send();
+
+
+    };
+
+    function getmodal3(id) {
+
+      var xhr = new XMLHttpRequest();
+      var cookie;
+      cookie = getCookie('cookie');
+
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/get_i_info.php?cookie=' + cookie + '&id=' + id + '&is_done=1', true);
+      xhr.onreadystatechange = function() {
+        if (this.readyState !== 4) return;
+        if (this.status !== 200) return; // or whatever error handling you want
+        if (this.responseText != old) {
+
+          document.getElementById('modal_body').innerHTML = this.responseText;
+
+          $('#exampleModal').modal('show');
+
+        }
+
+      };
+      xhr.send();
+
+
+    };
+
+    function getIssueModal(id) {
+
     }
   </script>
 
