@@ -102,13 +102,17 @@ echo '
     </tr>
   </tbody>
 </table>
-                <button class="btn btn-primary btn-sm" type="button" onclick="updateissue(' . $id . ')">
+        <button class="btn btn-primary btn-sm" type="button" onclick="updateissue(' . $id . ')">
         Mark as complete
         </button>
         <hr><br>
 
 ';
 }
+
+$qid = $_GET['id'];
+echo '<a class="btn btn-primary" href="new_issue.php?id=' . $qid . '" role="button">Add issue</a>';
+
 
 
 ?>
