@@ -75,8 +75,10 @@ while ($row = mysqli_fetch_assoc($result)) {
   </div>
 </div>';
 
-$abspath = "/admin" .$img;
-echo '
+$abspath = "/admin/" .$img;
+
+if ($_GET['hidecompleted'] == 1 ) {
+    echo '
 
 <table class="table table-sm">
   <thead>
@@ -89,12 +91,12 @@ echo '
   <tbody>
     <tr>
       <th scope="row">ID</th>
-      <td>'.$id.'</td>
+      <td>' . $id . '</td>
 
     </tr>
     <tr>
       <th scope="row">Made by</th>
-      <td>'.$username.'</td>
+      <td>' . $username . '</td>
     </tr>
         <tr>
       <th scope="row">Description</th>
@@ -102,15 +104,62 @@ echo '
     </tr>
     <tr>
       <th scope="row">Date</th>
-      <td>'.$date.'</td>
+      <td>' . $date . '</td>
     </tr>
         <tr>
       <th scope="row">Time</th>
-      <td>'.$time.'</td>
+      <td>' . $time . '</td>
     </tr>
     <tr>
       <th scope="row">image urls</th>
-      <td>' .$img. '</td>
+      <td><a href="' . $abspath . '">View Image</a></td>
+    </tr>
+        <tr>
+      <th scope="row">Is done</th>
+      <td>' . $is_done . '</td>
+    </tr>
+  </tbody>
+</table>
+
+        <hr><br>
+
+';
+}else {
+    echo '
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Field</th>
+      <th scope="col">Description</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">ID</th>
+      <td>' . $id . '</td>
+
+    </tr>
+    <tr>
+      <th scope="row">Made by</th>
+      <td>' . $username . '</td>
+    </tr>
+        <tr>
+      <th scope="row">Description</th>
+      <td>' . $des . '</td>
+    </tr>
+    <tr>
+      <th scope="row">Date</th>
+      <td>' . $date . '</td>
+    </tr>
+        <tr>
+      <th scope="row">Time</th>
+      <td>' . $time . '</td>
+    </tr>
+    <tr>
+      <th scope="row">image urls</th>
+      <td><a href="' . $abspath . '">View Image</a></td>
     </tr>
         <tr>
       <th scope="row">Is done</th>
@@ -124,8 +173,8 @@ echo '
         <hr><br>
 
 ';
+  }
 }
-
 $qid = $_GET['id'];
 echo '<a class="btn btn-primary" href="new_issue.php?id=' . $qid . '" role="button">Add issue</a>';
 
