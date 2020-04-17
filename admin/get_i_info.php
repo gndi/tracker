@@ -13,7 +13,6 @@ function getmanager_name($db, $code)
   return $name;
 };
 
-$username = getmanager_name($db, $_GET['id']);
 $id = mysqli_real_escape_string($db, $_GET['id']);
 $is_done_q = mysqli_real_escape_string($db, $_GET['is_done']);
 mysqli_query($db, "set names utf8");
@@ -22,11 +21,9 @@ mysqli_query($db, "set names utf8");
 if (isset($is_done_q) and $is_done_q == 1) {
   error_log("i shouldn't be here");
   $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = true  order by id desc limit 0,10  ;";
-
-}else{
+} else {
   error_log("im here");
   $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done != true order by id desc limit 0,10  ;";
-
 }
 // $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = false or is_done is null order by id desc limit 0,10  ;";
 
@@ -37,10 +34,11 @@ while ($row = mysqli_fetch_assoc($result)) {
   $time = $row['time'];
   $des = $row['issue_description'];
   $img = $row['img'];
-  $made_by = $row['made_by'];
   $id = $row['id'];
   $is_done = $row['is_done'];
   $due_date = $row['due_date'];
+  $made_by = getmanager_name($db, $row["made_by"]);
+  // i have no fucking idea what this is!
   echo '
   
   
@@ -75,9 +73,9 @@ while ($row = mysqli_fetch_assoc($result)) {
   </div>
 </div>';
 
-$abspath = "/admin/" .$img;
+  $abspath = "/admin/" . $img;
 
-if ($_GET['hidecompleted'] == 1 ) {
+  if ($_GET['hidecompleted'] == 1) {
     echo '
 
 <table class="table table-sm">
@@ -96,7 +94,7 @@ if ($_GET['hidecompleted'] == 1 ) {
     </tr>
     <tr>
       <th scope="row">Made by</th>
-      <td>' . $username . '</td>
+      <td>' . $made_by . '</td>
     </tr>
         <tr>
       <th scope="row">Description</th>
@@ -124,7 +122,7 @@ if ($_GET['hidecompleted'] == 1 ) {
         <hr><br>
 
 ';
-}else {
+  } else {
     echo '
 
 <table class="table table-sm">
@@ -143,7 +141,7 @@ if ($_GET['hidecompleted'] == 1 ) {
     </tr>
     <tr>
       <th scope="row">Made by</th>
-      <td>' . $username . '</td>
+      <td>' . $made_by . '</td>
     </tr>
         <tr>
       <th scope="row">Description</th>
