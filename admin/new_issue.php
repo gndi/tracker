@@ -53,14 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // error_log("the upload file is: \n");
   // error_log($uploadfile);
 
-
-  $uploaddir = 'img/';
-  $extenstion = ".jpg";
-  $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name']);
-  $filename = $uploadfile . $extenstion;
-  $img = $filename;
-
-
   echo "<p>";
 
   foreach ($_FILES["myFile"]["tmp_name"] as $key => $tmp_name) {

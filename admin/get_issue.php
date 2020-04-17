@@ -28,6 +28,8 @@ $id = $row['id'];
 $qid = $row["quarantine_id"];
 $issue_id = $row["id"];
 $abspath = "admin/" . $img;
+$due_date = $row["due_date"];
+$is_done = $row["is_done"];
 
 echo '<div class="card text-center" style="max-width:500px;">
 
