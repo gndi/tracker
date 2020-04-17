@@ -67,9 +67,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
       error_log("Upload failed");
     }
-  } 
+  }
   if (move_uploaded_file($_FILES['myFile']['tmp_name'], $filename)) {
-    error_log( "File is valid, and was successfully uploaded.\n");
+    error_log("File is valid, and was successfully uploaded.\n");
   } else {
     error_log("Upload failed");
   }
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $thisimg = $uploadfile . $extenstion;
 
 
-      
+
       $sql2 = "INSERT into `images` (`qid`, `img`, `issue_id`) values ($id, '$thisimg', $row_cnt)";
       $res2 = mysqli_query($db, $sql2);
 
@@ -119,9 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $success = false;
       }
       error_log($res2);
-
     }
-      }
+  }
 }
 
 
@@ -183,7 +182,7 @@ if (isset($success)) {
         </div>
         <div class="form-group col-md-2">
           <label for="check2">Add Due Date</label>
-          <input type="checkbox" name="check2" id="check2" onchange="change()">
+          <input type="checkbox" name="check2" id="check2" onchange="change1()">
         </div>
         <div id="due_date" class="form-group col-md-4">
 
@@ -202,12 +201,17 @@ if (isset($success)) {
 <script type="text/javascript">
   function change() {
     ch1 = document.getElementById('check1');
-    ch2 = document.getElementById('check2');
     if (ch1.checked) {
       document.getElementById('Upload').innerHTML = '<label for="myFile[]">Upload Image Only .JPG</label><input type="file" name="myFile[]" multiple id="myFile">';
     } else {
       document.getElementById('Upload').innerHTML = '';
     }
+
+  }
+
+  function change1() {
+    ch2 = document.getElementById('check2');
+
     if (ch2.checked) {
       document.getElementById('due_date').innerHTML = '<label for="date">Due Date</label><input type="date" name="due_date" id="date">';
     } else {
