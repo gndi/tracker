@@ -120,8 +120,8 @@
       $q .= " and building_status = '$bld' ";
     } 
 
-    print("The query is:\n");
-    print($q);
+    // print("The query is:\n");
+    // print($q);
     $q .= " order by id";
     
     // else if ($state_ == '') {
