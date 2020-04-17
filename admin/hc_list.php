@@ -110,11 +110,12 @@ if ($login_permission == 1 or $login_permission == 0) {
         <div class="form-group col-auto">
           <!--<label for="locality">Locality</label>-->
           <select class="form-control" name="locality" id="locality">
+            echo "<option value='' selected>Localities</option>";
+
             <?php
             $q = "SELECT admin2Pcode, admin2Name_en FROM `states` WHERE admin1Pcode='SD01' ;";
             $c = 1;
             $result = mysqli_query($db, $q);
-            echo "<option value=''  selected>Localities</option>";
             while ($row = mysqli_fetch_assoc($result)) {
               $hc_n = $row['admin2Name_en'];
               $hc_id = $row['admin2Pcode'];
