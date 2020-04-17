@@ -35,7 +35,7 @@
       $name = $row1['admin2Name_en'];
       return $name;
     };
-    
+
     function getmu($code)
     {
       if ($code == 0) {
@@ -95,14 +95,27 @@
 
     $state_ = mysqli_real_escape_string($db, $_GET['state']);
     $loc = mysqli_real_escape_string($db, $_GET['loc']);
+    $bld = mysqli_real_escape_string($db, $_GET['building_status']); // building status
+    $ow = mysqli_real_escape_string($db, $_GET['owner_acceptance']);
+    $mu = mysqli_real_escape_string($db, $_GET['medical_usage']);
+    $bt = mysqli_real_escape_string($db, $_GET['building_type']);
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
-    if ($state_ == '') {
+
+    if ($ow != "") {
+      $q = "SELECT * FROM `hc` WHERE owner_acceptance = '$ow'  order by id ";
+    } else if ($mu != "") {
+      $q = "SELECT * FROM `hc` WHERE medical_usage = '$mu'  order by id ";
+    } else if ($bt != "") {
+      $q = "SELECT * FROM `hc` WHERE building_type = '$bt'  order by id ";
+    } else if ($bld != "") {
+      $q = "SELECT * FROM `hc` WHERE building_status = '$bld'  order by id ";
+    } else if ($state_ == '' || $bld == "") {
       $q = "SELECT * FROM `hc` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%')  order by id ";
-    } elseif ($loc == '') {
+    } elseif ($loc == '' || $bld == "") {
       $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) order by id ";
     } else {
-      $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc') ) order by id ";
+      $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc') AND building_status = '$bld') order by id ";
     }
 
     $result = mysqli_query($db, $q);

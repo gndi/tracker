@@ -134,11 +134,6 @@ $result = mysqli_query($db, $q);
 $row = mysqli_fetch_assoc($result);
 $name = $row['name'];
 
-
-
-
-
-
 ?>
 <?php
 
