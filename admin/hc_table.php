@@ -102,21 +102,35 @@
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
 
-    if ($ow != "") {
-      $q = "SELECT * FROM `hc` WHERE owner_acceptance = '$ow'  order by id ";
-    } else if ($mu != "") {
-      $q = "SELECT * FROM `hc` WHERE medical_usage = '$mu'  order by id ";
-    } else if ($bt != "") {
-      $q = "SELECT * FROM `hc` WHERE building_type = '$bt'  order by id ";
-    } else if ($bld != "") {
-      $q = "SELECT * FROM `hc` WHERE building_status = '$bld'  order by id ";
-    } else if ($state_ == '' || $bld == "") {
-      $q = "SELECT * FROM `hc` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%')  order by id ";
-    } elseif ($loc == '' || $bld == "") {
-      $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) order by id ";
+
+    if ($state_ != "" and $loc != "") {
+      $q .= "select * from `hc` where state_ = '$state_' and locality = '$loc'";
     } else {
-      $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc') AND building_status = '$bld') order by id ";
+      $q .= "select * from `hc` where state_ is not null ";
     }
+
+    // possibly we want to get it per state only
+    if ($ow != "") {
+      $q .= " and owner_acceptance = '$ow' ";
+    }  if ($mu != "") {
+      $q .= " and medical_usage = '$mu' ";
+    }  if ($bt != "") {
+      $q .= " and building_type = '$bt' ";
+    }  if ($bld != "") {
+      $q .= " and building_status = '$bld' ";
+    } 
+
+    print("The query is:\n");
+    print($q);
+    $q .= " order by id";
+    
+    // else if ($state_ == '') {
+    //   $q = "SELECT * FROM `hc` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%')  order by id ";
+    // } elseif ($loc == '' ) {
+    //   $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) order by id ";
+    // } else {
+    //   $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc')) order by id ";
+    // }
 
     $result = mysqli_query($db, $q);
     while ($row = mysqli_fetch_assoc($result)) {

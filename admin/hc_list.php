@@ -384,7 +384,7 @@ if ($login_permission == 1 or $login_permission == 0) {
       var cookie;
       cookie = getCookie('cookie');
 
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/hc_table.php?cookie=' + cookie + '&q=' + q + '&state=' + st1 + '&loc=' + loc1 + "&building_status=" + bld+"&medical_usage="+med + "&owner_acceptance="+ow+"&building_type="+bt1, true);
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/hc_table.php?cookie=' + cookie + '&q=' + q + '&state=' + st1 + '&loc=' + loc1 + "&building_status=" + bld + "&medical_usage=" + med + "&owner_acceptance=" + ow + "&building_type=" + bt1, true);
       xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return;
         if (this.status !== 200) return; // or whatever error handling you want
