@@ -25,6 +25,8 @@ $des = $row['issue_description'];
 $img =$row['img'];
 $made_by = getmanager_name($db,$row['made_by']);
 $id = $row['id'];
+$qid = $row["quarantine_id"];
+$issue_id = $row["id"];
 $abspath = "admin/" . $img;
 
 echo '<div class="card text-center" style="max-width:500px;">
@@ -47,6 +49,20 @@ echo '<div class="card text-center" style="max-width:500px;">
   <div
 </div>';
 
+echo '<div>';
+
+echo '<p>All images related to this issue:</p>';
+
+// echo "The id is: $id";
+  $q = "select * from `images` where issue_id=$issue_id";
+$result = mysqli_query($db, $q);
+while ($row = mysqli_fetch_assoc($result)) {
+  $img = $row["img"];
+  $abspath = "admin/" . $img;
+  echo '<a href="../' . $abspath . '">Image url</a>
+  <hr>';
+  
+}
 
 
 

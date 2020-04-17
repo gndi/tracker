@@ -60,10 +60,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $filename = $uploadfile . $extenstion;
   $img = $filename;
 
-  echo $filename;
 
   echo "<p>";
 
+  foreach ($_FILES["myFile"]["tmp_name"] as $key => $tmp_name) {
+    $uploaddir = 'img/';
+    $extenstion = ".jpg";
+    $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name'][$key]);
+    $filename = $uploadfile . $extenstion;
+    $img = $filename;
+
+    if (move_uploaded_file($_FILES['myFile']['tmp_name'][$key], $filename)) {
+      error_log("File is valid, and was successfully uploaded.\n");
+    } else {
+      error_log("Upload failed");
+    }
+  } 
   if (move_uploaded_file($_FILES['myFile']['tmp_name'], $filename)) {
     error_log( "File is valid, and was successfully uploaded.\n");
   } else {
@@ -88,23 +100,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $res = mysqli_query($db, $sql);
+    $qq = "select * from issues";
 
-    $sql2 = "INSERT into `images` (`qid`, `img`) values ($id, '$img')";
-    $res2 = mysqli_query($db, $sql2);
+    $row_cnt = mysqli_num_rows(mysqli_query($db, $qq)); // this is dumb
 
-    if ($res) {
-      $success = true;
-    } else {
-      $success = false;
+    for ($i = 0; $i < count($_FILES['myFile']['name']); $i++) {
+      $uploaddir = 'img/';
+      $extenstion = ".jpg";
+      $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name'][$i]);
+      $thisimg = $uploadfile . $extenstion;
+
+
+      
+      $sql2 = "INSERT into `images` (`qid`, `img`, `issue_id`) values ($id, '$thisimg', $row_cnt)";
+      $res2 = mysqli_query($db, $sql2);
+
+      if ($res) {
+        $success = true;
+      } else {
+        $success = false;
+      }
+
+      if ($res2) {
+        $success = true;
+      } else {
+        $success = false;
+      }
+      error_log($res2);
+
     }
-
-    if ($res2) {
-      $success = true;
-    } else {
-      $success = false;
-    }
-    error_log($res2);
-  }
+      }
 }
 
 
@@ -159,7 +184,7 @@ if (isset($success)) {
       <div class=" row">
         <div class="form-group col-md-2">
           <label for="check1">Upload Image</label>
-          <input type="checkbox" name="check1" id="check1" onchange="change()">
+          <input type="checkbox" name="check1[]" id="check1" onchange="change()">
         </div>
         <div id="Upload" class="form-group col-md-4">
 
@@ -187,7 +212,7 @@ if (isset($success)) {
     ch1 = document.getElementById('check1');
     ch2 = document.getElementById('check2');
     if (ch1.checked) {
-      document.getElementById('Upload').innerHTML = '<label for="myFile">Upload Image Only .JPG</label><input type="file" name="myFile" id="myFile">';
+      document.getElementById('Upload').innerHTML = '<label for="myFile[]">Upload Image Only .JPG</label><input type="file" name="myFile[]" multiple id="myFile">';
     } else {
       document.getElementById('Upload').innerHTML = '';
     }
