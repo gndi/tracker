@@ -68,10 +68,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       error_log("Upload failed");
     }
   }
-  if (move_uploaded_file($_FILES['myFile']['tmp_name'], $filename)) {
-    error_log("File is valid, and was successfully uploaded.\n");
-  } else {
-    error_log("Upload failed");
+
+  foreach ($_FILES["myFile1"]["tmp_name"] as $key => $tmp_name) {
+    $uploaddir = 'files/';
+
+    $path = $_FILES['myFile1']['name'];
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+    $uploadfile = $uploaddir . basename($_FILES['myFile1']['tmp_name'][$key]);
+    $filename = $uploadfile . $ext;
+    $fname = $filename;
+
+    if (move_uploaded_file($_FILES['myFile1']['tmp_name'][$key], $filename)) {
+      error_log("File is valid, and was successfully uploaded.\n");
+    } else {
+      error_log("Upload failed");
+    }
   }
 
 
@@ -96,22 +108,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $row_cnt = mysqli_num_rows(mysqli_query($db, $qq)); // this is dumb
 
-    for ($i = 0; $i < count($_FILES['myFile']['name']); $i++) {
+    // for image database
+    for ($i = 0; $i < count($_FILES['myFile']['tmp_name']); $i++) {
       $uploaddir = 'img/';
       $extenstion = ".jpg";
-      $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name'][$i]);
-      $thisimg = $uploadfile . $extenstion;
+      $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name'][$key]);
+      $filename = $uploadfile . $extenstion;
+      $img = $filename;
 
 
-
-      $sql2 = "INSERT into `images` (`qid`, `img`, `issue_id`) values ($id, '$thisimg', $row_cnt)";
+      $sql2 = "INSERT into `images` (`qid`, `img`, `issue_id`) values ($id, '$img', $row_cnt)";
       $res2 = mysqli_query($db, $sql2);
 
-      if ($res) {
+      if ($res2) {
         $success = true;
       } else {
         $success = false;
       }
+      error_log($res2);
+    }
+
+    // for file ups
+    for ($i = 0; $i < count($_FILES['myFile1']['name']); $i++) {
+      $uploaddir = 'files/';
+      $path = $_FILES['myFile1']['name'];
+      $ext = pathinfo($path, PATHINFO_EXTENSION);
+      $uploadfile = $uploaddir . basename($_FILES['myFile1']['tmp_name'][$key]);
+      $filename = $uploadfile . $ext;
+      $fname = $filename;
+
+      $sql2 = "INSERT into `files` (`qid`, `img`, `issue_id`) values ($id, '$fname', $row_cnt)";
+      $res2 = mysqli_query($db, $sql2);
 
       if ($res2) {
         $success = true;
@@ -173,8 +200,18 @@ if (isset($success)) {
           <input type="checkbox" name="check1[]" id="check1" onchange="change()">
         </div>
         <div id="Upload" class="form-group col-md-4">
+        </div>
+
+        <!-- For file upload -->
+        <div class="form-group col-md-2">
+          <label for="checkFile">Upload File</label>
+          <input type="checkbox" name="checkFile[]" id="checkFile" onchange="changeFile()">
+        </div>
+        <div id="UploadFile" class="form-group col-md-4">
 
         </div>
+
+
         <div class="form-group col-md-2">
           <label for="check2">Add Due Date</label>
           <input type="checkbox" name="check2" id="check2" onchange="change1()">
@@ -200,6 +237,16 @@ if (isset($success)) {
       document.getElementById('Upload').innerHTML = '<label for="myFile[]">Upload Image Only .JPG</label><input type="file" name="myFile[]" multiple id="myFile">';
     } else {
       document.getElementById('Upload').innerHTML = '';
+    }
+
+  }
+
+  function changeFile() {
+    ch1 = document.getElementById('checkFile');
+    if (ch1.checked) {
+      document.getElementById('UploadFile').innerHTML = '<label for="myFile1[]">Upload Documents .PDF/Docx</label><input type="file" name="myFile1[]" multiple id="myFile1">';
+    } else {
+      document.getElementById('UploadFile').innerHTML = '';
     }
 
   }
