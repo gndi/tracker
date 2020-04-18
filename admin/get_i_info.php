@@ -75,7 +75,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
   $abspath = "/admin/" . $img;
 
-  if ($_GET['hidecompleted'] == 1) {
+  if (isset($_GET['hidecompleted']) and $_GET["hidecompleted"] == 1) {
     echo '
 
 <table class="table table-sm">

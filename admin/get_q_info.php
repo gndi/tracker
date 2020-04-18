@@ -307,10 +307,10 @@
   </tbody>
 </table>
 <?php
-if ($img == 'No Image' or $img == '') {
-  echo $img;
-} else {
-  echo '<img src="../' . $img . '" width="auto" height="auto" style="max-width:100%;" />';
-}
+// if ($img == 'No Image' or $img == '') {
+//   echo $img;
+// } else {
+//   echo '<img src="../' . $img . '" width="auto" height="auto" style="max-width:100%;" />';
+// }
 
 ?>
