@@ -14,9 +14,19 @@ function getmanager_name($db, $code)
 };
 
 $id = mysqli_real_escape_string($db, $_GET['id']);
+$is_done_q = mysqli_real_escape_string($db, $_GET['is_done']);
 mysqli_query($db, "set names utf8");
 
-$q = "SELECT * FROM `issues` WHERE quarantine_id=$id  order by id desc limit 0,10  ;";
+
+if (isset($is_done_q) and $is_done_q == 1) {
+  error_log("i shouldn't be here");
+  $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = true  order by id desc limit 0,10  ;";
+} else {
+  error_log("im here");
+  $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done != true order by id desc limit 0,10  ;";
+}
+// $q = "SELECT * FROM `issues` WHERE quarantine_id=$id  and is_done = false or is_done is null order by id desc limit 0,10  ;";
+
 $result = mysqli_query($db, $q);
 echo '<div class="accordion" id="accordionExample">';
 while ($row = mysqli_fetch_assoc($result)) {
@@ -24,11 +34,15 @@ while ($row = mysqli_fetch_assoc($result)) {
   $time = $row['time'];
   $des = $row['issue_description'];
   $img = $row['img'];
-  $made_by = $row['made_by'];
   $id = $row['id'];
   $is_done = $row['is_done'];
   $due_date = $row['due_date'];
-  echo '<div class="modal" tabindex="-1" role="dialog">
+  $made_by = getmanager_name($db, $row["made_by"]);
+  // i have no fucking idea what this is!
+  echo '
+  
+  
+  <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -44,7 +58,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         <img src="../' . $img . '" width="auto" height="auto" style="max-width:100%;" />
         <br><br>
         
-        <p>Made by: ' . $made_by . '</p>
         <p>Due date: ' . $due_date . '</p>
         <p>Status: ' . $is_done . '</p>
       </div>
@@ -60,7 +73,10 @@ while ($row = mysqli_fetch_assoc($result)) {
   </div>
 </div>';
 
-echo '
+  $abspath = "/admin/" . $img;
+
+  if ($_GET['hidecompleted'] == 1) {
+    echo '
 
 <table class="table table-sm">
   <thead>
@@ -73,12 +89,12 @@ echo '
   <tbody>
     <tr>
       <th scope="row">ID</th>
-      <td>'.$id.'</td>
+      <td>' . $id . '</td>
 
     </tr>
     <tr>
       <th scope="row">Made by</th>
-      <td>'.$made_by.'</td>
+      <td>' . $made_by . '</td>
     </tr>
         <tr>
       <th scope="row">Description</th>
@@ -86,15 +102,62 @@ echo '
     </tr>
     <tr>
       <th scope="row">Date</th>
-      <td>'.$date.'</td>
+      <td>' . $date . '</td>
     </tr>
         <tr>
       <th scope="row">Time</th>
-      <td>'.$time.'</td>
+      <td>' . $time . '</td>
     </tr>
     <tr>
       <th scope="row">image urls</th>
-      <td>'.$img. '</td>
+      <td><a href="' . $abspath . '">View Image</a></td>
+    </tr>
+        <tr>
+      <th scope="row">Is done</th>
+      <td>' . $is_done . '</td>
+    </tr>
+  </tbody>
+</table>
+
+        <hr><br>
+
+';
+  } else {
+    echo '
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Field</th>
+      <th scope="col">Description</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">ID</th>
+      <td>' . $id . '</td>
+
+    </tr>
+    <tr>
+      <th scope="row">Made by</th>
+      <td>' . $made_by . '</td>
+    </tr>
+        <tr>
+      <th scope="row">Description</th>
+      <td>' . $des . '</td>
+    </tr>
+    <tr>
+      <th scope="row">Date</th>
+      <td>' . $date . '</td>
+    </tr>
+        <tr>
+      <th scope="row">Time</th>
+      <td>' . $time . '</td>
+    </tr>
+    <tr>
+      <th scope="row">image urls</th>
+      <td><a href="' . $abspath . '">View Image</a></td>
     </tr>
         <tr>
       <th scope="row">Is done</th>
@@ -108,8 +171,8 @@ echo '
         <hr><br>
 
 ';
+  }
 }
-
 $qid = $_GET['id'];
 echo '<a class="btn btn-primary" href="new_issue.php?id=' . $qid . '" role="button">Add issue</a>';
 

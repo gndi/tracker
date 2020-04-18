@@ -35,7 +35,7 @@
       $name = $row1['admin2Name_en'];
       return $name;
     };
-    
+
     function getmu($code)
     {
       if ($code == 0) {
@@ -95,15 +95,42 @@
 
     $state_ = mysqli_real_escape_string($db, $_GET['state']);
     $loc = mysqli_real_escape_string($db, $_GET['loc']);
+    $bld = mysqli_real_escape_string($db, $_GET['building_status']); // building status
+    $ow = mysqli_real_escape_string($db, $_GET['owner_acceptance']);
+    $mu = mysqli_real_escape_string($db, $_GET['medical_usage']);
+    $bt = mysqli_real_escape_string($db, $_GET['building_type']);
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
-    if ($state_ == '') {
-      $q = "SELECT * FROM `hc` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%')  order by id ";
-    } elseif ($loc == '') {
-      $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) order by id ";
+
+
+    if ($state_ != "" and $loc != "") {
+      $q .= "select * from `hc` where state_ = '$state_' and locality = '$loc'";
     } else {
-      $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc') ) order by id ";
+      $q .= "select * from `hc` where state_ is not null ";
     }
+
+    // possibly we want to get it per state only
+    if ($ow != "") {
+      $q .= " and owner_acceptance = '$ow' ";
+    }  if ($mu != "") {
+      $q .= " and medical_usage = '$mu' ";
+    }  if ($bt != "") {
+      $q .= " and building_type = '$bt' ";
+    }  if ($bld != "") {
+      $q .= " and building_status = '$bld' ";
+    } 
+
+    // print("The query is:\n");
+    // print($q);
+    $q .= " order by id";
+    
+    // else if ($state_ == '') {
+    //   $q = "SELECT * FROM `hc` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%')  order by id ";
+    // } elseif ($loc == '' ) {
+    //   $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) order by id ";
+    // } else {
+    //   $q = "SELECT * FROM `hc` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc')) order by id ";
+    // }
 
     $result = mysqli_query($db, $q);
     while ($row = mysqli_fetch_assoc($result)) {
@@ -157,7 +184,11 @@
     <td>$building_type</td>
     <td>$power</td>
     <td>$allcount</td>
-    <td><a href='#' onclick=\" getmodal($id)\"><img src='../images/info.png' width='20px' height='20px' /> </a> <a href='#' onclick=\" getmodal2($id)\"><img src='../images/issues.png' width='20px' height='20px' /> </a><a href='#' onclick= \" map.setView(new ol.View({ center: ol.proj.fromLonLat([$lon,$lat], 'EPSG:3857'), zoom: 15 })); \" > <img src='../images/$icon' width='20px' height='20px' /></a> </td>
+    <td>
+    <a href='#' onclick=\" getmodal($id)\"><img src='../images/info.png' width='20px' height='20px' /> </a>
+    <a href='#' onclick=\" getmodal3($id)\"><img src='../images/Ok.png' width='20px' height='20px' /> </a>
+    <a href='#' onclick=\" getmodal2($id)\"><img src='../images/issues.png' width='20px' height='20px' /> </a>
+    <a href='#' onclick= \" map.setView(new ol.View({ center: ol.proj.fromLonLat([$lon,$lat], 'EPSG:3857'), zoom: 15 })); \" > <img src='../images/$icon' width='20px' height='20px' /></a> </td>
     </tr>";
 
 
