@@ -2,7 +2,6 @@
 include('../config.php');
 include('./session.php');
 include('./header.php');
-
 if ($login_permission == 1 or $login_permission == 0) {
 } else {
   header("location:./index.php");
@@ -81,14 +80,12 @@ if ($login_permission == 1 or $login_permission == 0) {
 
 
     </div>
-
     <div style="border-style: solid;border-width: 1px;border-color:#007BFF;">
       <div class="form-row  ">
         <div class="form-group col-auto">
           <!--<label for="search">Search</label> -->
           <input id="search" class="form-control " type="search" placeholder="Search" aria-label="Search" onchange='userslist();'>
         </div>
-
         <div class="form-group col-auto">
           <!--<label for="state_">State</label>-->
           <select class="form-control" name="state_" id="state_" onchange="getlocality()">
@@ -96,26 +93,30 @@ if ($login_permission == 1 or $login_permission == 0) {
             $q = "SELECT DISTINCT admin1Pcode, admin1Name_en FROM `states` order by admin1Pcode ";
             $c = 1;
             $result = mysqli_query($db, $q);
-            echo "<option value=''  selected>States</option>";
+            echo "<option value=''  selected>All</option>";
             while ($row = mysqli_fetch_assoc($result)) {
               $hc_n = $row['admin1Name_en'];
               $hc_id = $row['admin1Pcode'];
+
               echo "<option value='" . $hc_id . "' >" . $hc_n . "</option>";
+
+
               $c += 1;
             }
             ?>
+
+
+
           </select>
         </div>
-
         <div class="form-group col-auto">
           <!--<label for="locality">Locality</label>-->
           <select class="form-control" name="locality" id="locality">
-            echo "<option value='' selected>Localities</option>";
-
             <?php
             $q = "SELECT admin2Pcode, admin2Name_en FROM `states` WHERE admin1Pcode='SD01' ;";
             $c = 1;
             $result = mysqli_query($db, $q);
+            echo "<option value=''  selected>All</option>";
             while ($row = mysqli_fetch_assoc($result)) {
               $hc_n = $row['admin2Name_en'];
               $hc_id = $row['admin2Pcode'];
@@ -124,54 +125,10 @@ if ($login_permission == 1 or $login_permission == 0) {
               $c += 1;
             }
             ?>
-          </select>
-        </div>
 
-        <!-- Search by building status -->
-        <div class="form-group col-auto">
-          <select class="form-control" name="building_status" id="building_status" onchange='userslist();'>
-            <option value='' selected>Building status</option>
-            <option value="0">Approved by team</option>
-            <option value="1">Under maintenance</option>
-            <option value="2">Not ready yet</option>
-            <option value="3">Other</option>
 
           </select>
         </div>
-
-        <!-- Search by owner acceptance -->
-        <div class="form-group col-auto">
-          <select class="form-control" name="owner_acceptance" id="owner_acceptance" onchange='userslist();'>
-            <option value='' selected>Owner acceptance</option>
-            <option value="0">Not Accepted</option>
-            <option value="1">Accepted</option>
-
-          </select>
-        </div>
-
-        <!-- Search by building type -->
-        <div class="form-group col-auto">
-          <select class="form-control" name="building_type" id="building_type" onchange='userslist();'>
-            <option value='' selected>Building type</option>
-            <option value="0">Hospital</option>
-            <option value="1">Stadium</option>
-            <option value="2">School complex</option>
-            <option value="3">Others</option>
-
-          </select>
-        </div>
-
-        <!-- Search by medical usage -->
-        <div class="form-group col-auto">
-          <select class="form-control" name="medical_usage" id="medical_usage" onchange='userslist();'>
-            <option value='' selected>Medical usage</option>
-            <option value="0">Isolation</option>
-            <option value="1">Self isolation</option>
-
-          </select>
-        </div>
-
-
         <button class="btn btn-outline-primary " onclick='userslist();'>Search</button>
       </div>
     </div>
@@ -216,7 +173,6 @@ if ($login_permission == 1 or $login_permission == 0) {
       xmlhttp.send();
 
     }
-
 
     var q = '';
     document.getElementById("hc_list").classList.add("active");
@@ -290,7 +246,14 @@ if ($login_permission == 1 or $login_permission == 0) {
           style.setImage(hospital);
         }
 
+
+
+
+
+
         style.getText().setText(resolution < 500 ? feature.get('name') : '');
+
+
 
         return style;
       }
@@ -344,30 +307,6 @@ if ($login_permission == 1 or $login_permission == 0) {
     function userslist() {
       var q = document.getElementById("search").value;
       var st = document.getElementById("state_");
-
-      var medical = document.getElementById("medical_usage");
-      if (medical.options[medical.selectedIndex] == undefined) {
-        var med = '';
-      } else {
-        var med = medical.options[medical.selectedIndex].value;
-      }
-
-      var owner = document.getElementById("owner_acceptance");
-      if (owner.options[owner.selectedIndex] == undefined) {
-        var ow = '';
-      } else {
-        var ow = owner.options[owner.selectedIndex].value;
-      }
-
-      var btype = document.getElementById("building_type");
-      if (btype.options[btype.selectedIndex] == undefined) {
-        var bt1 = '';
-      } else {
-        var bt1 = btype.options[btype.selectedIndex].value;
-      }
-
-      var building = document.getElementById("building_status");
-
       var loc = document.getElementById("locality");
       if (loc.options[loc.selectedIndex] == undefined) {
         var loc1 = '';
@@ -377,15 +316,12 @@ if ($login_permission == 1 or $login_permission == 0) {
       }
 
       var st1 = st.options[st.selectedIndex].value;
-      var bld = building.options[building.selectedIndex].value;
-
-      // add medical_status
 
       var xhr = new XMLHttpRequest();
       var cookie;
       cookie = getCookie('cookie');
 
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/hc_table.php?cookie=' + cookie + '&q=' + q + '&state=' + st1 + '&loc=' + loc1 + "&building_status=" + bld + "&medical_usage=" + med + "&owner_acceptance=" + ow + "&building_type=" + bt1, true);
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/hc_table.php?cookie=' + cookie + '&q=' + q + '&state=' + st1 + '&loc=' + loc1, true);
       xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return;
         if (this.status !== 200) return; // or whatever error handling you want
@@ -505,57 +441,8 @@ if ($login_permission == 1 or $login_permission == 0) {
 
     };
 
-
-    function getmodal2(id) {
-
-      var xhr = new XMLHttpRequest();
-      var cookie;
-      cookie = getCookie('cookie');
-
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/get_i_info.php?cookie=' + cookie + '&id=' + id, true);
-      xhr.onreadystatechange = function() {
-        if (this.readyState !== 4) return;
-        if (this.status !== 200) return; // or whatever error handling you want
-        if (this.responseText != old) {
-
-          document.getElementById('modal_body').innerHTML = this.responseText;
-
-          $('#exampleModal').modal('show');
-
-        }
-
-      };
-      xhr.send();
-
-
-    };
-
-    function getmodal3(id) {
-
-      var xhr = new XMLHttpRequest();
-      var cookie;
-      cookie = getCookie('cookie');
-
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/get_i_info.php?cookie=' + cookie + '&id=' + id + '&is_done=1&hidecompleted=1', true);
-      xhr.onreadystatechange = function() {
-        if (this.readyState !== 4) return;
-        if (this.status !== 200) return; // or whatever error handling you want
-        if (this.responseText != old) {
-
-          document.getElementById('modal_body').innerHTML = this.responseText;
-
-          $('#exampleModal').modal('show');
-
-        }
-
-      };
-      xhr.send();
-
-
-    };
-
-    function getIssueModal(id) {
-
+    function getIssueModal(id){
+      
     }
 
 function editmodal(id,col,title,txt,type){

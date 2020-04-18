@@ -25,22 +25,13 @@ $des = $row['issue_description'];
 $img =$row['img'];
 $made_by = getmanager_name($db,$row['made_by']);
 $id = $row['id'];
-<<<<<<< HEAD
 $due_date = $row['due_date'];
 $is_done = $row['is_done'];
-=======
-$qid = $row["quarantine_id"];
-$issue_id = $row["id"];
-$abspath = "admin/" . $img;
-$due_date = $row["due_date"];
-$is_done = $row["is_done"];
->>>>>>> bee573830c1be63d6d40ebbd217fca46e9e86dcb
 
 echo '<div class="card text-center" style="max-width:500px;">
 
-
 <img class="card-img-top" src="../'.$img. '" alt="No Image " >
-<a href="../'.$abspath.'">Image url</a>
+<a href="../'.$img.'">Image url</a>
 <h5 class="card-title">'.$made_by. '</h5>
   <div class="card-body">
         <p>Issue description</p>: ' . $des . '
@@ -56,20 +47,6 @@ echo '<div class="card text-center" style="max-width:500px;">
   <div
 </div>';
 
-echo '<div>';
-
-echo '<p>All images related to this issue:</p>';
-
-// echo "The id is: $id";
-  $q = "select * from `images` where issue_id=$issue_id";
-$result = mysqli_query($db, $q);
-while ($row = mysqli_fetch_assoc($result)) {
-  $img = $row["img"];
-  $abspath = "admin/" . $img;
-  echo '<a href="../' . $abspath . '">Image url</a>
-  <hr>';
-  
-}
 
 
 
