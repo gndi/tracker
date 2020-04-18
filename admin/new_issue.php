@@ -131,11 +131,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // for file ups
     for ($i = 0; $i < count($_FILES['myFile1']['name']); $i++) {
       $uploaddir = 'files/';
-      $path = $_FILES['myFile1']['name'];
+      $path = $_FILES['myFile1']['name'][$key];
       $ext = pathinfo($path, PATHINFO_EXTENSION);
       $uploadfile = $uploaddir . basename($_FILES['myFile1']['tmp_name'][$key]);
-      $filename = $uploadfile . $ext;
-      $fname = $filename;
+      $filename = $uploadfile.  '.';
+      $fname = $filename. $ext;
 
       $sql2 = "INSERT into `files` (`qid`, `img`, `issue_id`) values ($id, '$fname', $row_cnt)";
       $res2 = mysqli_query($db, $sql2);
