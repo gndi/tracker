@@ -36,62 +36,176 @@ if ($login_permission == 1 or $login_permission == 0) {
 }
 
 
+$qid = $_GET["id"];
+
+$q = "select * from `hc` where id = '$qid'";
+$query = mysqli_query($db, $q);
+$row = mysqli_fetch_assoc($query);
+
+$olddescription = $row["name"]; // not used to scared to delete it
+$oldname = $row["name"];
+$oldadress = $row["adress"];
+$oldinf = $row["info"];
+$oldpower = $row["power"];
+$oldcapacity = $row["power"]; // this is a bug
+$oldphone = $row["phone"];
+$oldphone2  = $row["phone2"];
+$oldlon = $row["lon"];
+$oldlat = $row["lat"];
+$oldstate = $row["state"];
+$oldowner_name = $row["owner_name"];
+$oldowner_contact = $row["owner_contact"];
+$oldproject_manager = $row["project_manager"];
+$oldstakeholders = $row["stakeholders"];
+//i_teams | r_t_contacts | medical_usage | building_status | owner_acceptance 
+//| resistnce_acceptance | readiness_status | building_type | init_budget | e_f_date   
+// | i_date     | state_ | locality | img      | manager_id
+$oldi_teams = $row["i_teams"];
+$oldr_t_contacts = $row["r_t_contacts"];
+$old_medical_usage = $row["medical_usage"];
+$old_building_status = $row["building_status"];
+$old_owner_acceptance = $row["owner_acceptance"];
+$old_resistance_acceptance = $row["resistnce_acceptance"];
+$old_readiness_status = $row["readiness_status"];
+$old_building_type = $row["building_type"];
+$oldinit_budget = $row["init_budget"];
+$olde_f_date = $row["e_f_date"];
+$oldi_date = $row["i_date"];
+$oldstate = $row["state"];
+$oldlocality = $row["locality"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['name']));
+  if (!isset($name)){$name = $oldname;}
   $info = htmlspecialchars(mysqli_real_escape_string($db, $_POST['info']));
+  if (!isset($info)){$info = $oldinfo;}
   $lon = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lon']));
+  if (!isset($lon)){$lon = $oldlon;}
   $lat = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lat']));
+  if (!isset($lat)){$lat = $oldlat;}
   $adress = htmlspecialchars(mysqli_real_escape_string($db, $_POST['adress']));
+  if (!isset($adress)){$adress=$oldadress;}
   $power = htmlspecialchars(mysqli_real_escape_string($db, $_POST['power']));
+  if (!isset($power)){$power = $oldpower;}
   $phone = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone']));
+  if (!isset($phone)){$phone = $oldphone;}
   $phone2 = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone2']));
+  if (!isset($phone)) {
+    $phone2 = $oldphone;
+  }
+
   $state = 0;
   $owner_name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['owner_name']));
+  if (!isset($owner_name)) {
+    $owner_name = $oldowner_name;
+  }
+
   $owner_contact = htmlspecialchars(mysqli_real_escape_string($db, $_POST['owner_contact']));
+  if (!isset($owner_contact)) {
+    $owner_contact = $oldowner_contact;
+  }
+
   $project_manager = htmlspecialchars(mysqli_real_escape_string($db, $_POST['project_manager']));
+  if (!isset($project_manager)) {
+    $project_manager = $oldproject_manager;
+  }
+
   $stakeholders = htmlspecialchars(mysqli_real_escape_string($db, $_POST['stakeholders']));
+  if (!isset($stakeholders)) {
+    $stakeholders = $oldstakeholders;
+  }
+
   $i_teams = htmlspecialchars(mysqli_real_escape_string($db, $_POST['i_teams']));
+  if (!isset($i_teams)) {
+    $i_teams = $oldi_teams;
+  }
+
   $r_t_contacts = htmlspecialchars(mysqli_real_escape_string($db, $_POST['r_t_contacts']));
+  if (!isset($r_t_contacts)) {
+    $r_t_contacts = $oldr_t_contacts;
+  }
+
   $medical_usage = htmlspecialchars(mysqli_real_escape_string($db, $_POST['medical_usage']));
+  if (!isset($medical_usage)) {
+    $medical_usage = $old_medical_usage;
+  }
+
   $building_status = htmlspecialchars(mysqli_real_escape_string($db, $_POST['building_status']));
+  if (!isset($building_status)) {
+    $building_status = $old_building_status;
+  }
+
   $owner_acceptance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['owner_acceptance']));
+  if (!isset($owner_acceptance)) {
+    $owner_acceptance = $old_owner_acceptance;
+  }
+
   $resistnce_acceptance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['resistnce_acceptance']));
+  if (!isset($resistnce_acceptance)) {
+    $resistnce_acceptance = $old_resistance_acceptance;
+  }
+
   $readiness_status = htmlspecialchars(mysqli_real_escape_string($db, $_POST['readiness_status']));
+  if (!isset($readiness_status)) {
+    $readiness_status = $old_readiness_status;
+  }
+
   $building_type = htmlspecialchars(mysqli_real_escape_string($db, $_POST['building_type']));
+  if (!isset($building_type)) {
+    $building_type = $old_building_type;
+  }
+
   $init_budget = htmlspecialchars(mysqli_real_escape_string($db, $_POST['init_budget']));
+  if (!isset($init_budget) or $init_budget < 1) {
+    $init_budget = 1; // default value is zero
+  }
+
   $e_f_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['e_f_date']))));
+  if (!isset($e_f_date)) {
+    $e_f_date = $olde_f_date;
+  }
+
   $i_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['i_date']))));
+  if (!isset($i_date)) {
+    $i_date = $oldi_date;
+  }
+
   $state_ = htmlspecialchars(mysqli_real_escape_string($db, $_POST['state_']));
+  if (!isset($state)) {
+    $state_ = $oldstate;
+  }
+
   $locality = htmlspecialchars(mysqli_real_escape_string($db, $_POST['locality']));
-  if (isset($_POST['myFile'])) {
-    $img = saveimage($_FILES['myFile']['tmp_name']);
-  } else {
-    $img = 'No image';
+  if (!isset($locality)) {
+    $locality = $oldlocality;
   }
 
 
-  if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($power) and isset($phone) and isset($phone2) and  isset($state) and isset($adress)) {
 
+  // the update part happens here; make sure to update the html 
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
     //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
-    $sql = "INSERT INTO `hc` ( `name`, `info`, `power`, `phone`, `phone2`, `lon`, `lat`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', $lon, $lat, '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
+    $sql = "update `hc` set `name`= '$name' , `info`= '$info', `phone` = '$phone', `phone2` = '$phone2', `adress` = '$adress', `owner_name` = '$owner_name', `owner_contact` = '$owner_contact', `project_manager`='$project_manager', `stakeholders`='$stakeholders',
+    `i_teams`='$i_teams', `r_t_contacts`='$r_t_contacts', `medical_usage`='$medical_usage', `building_status`='$building_status', `owner_acceptance`= '$owner_acceptance',`resistnce_acceptance`= '$resistnce_acceptance', `building_type`='$building_type',`init_budget`='$init_budget',  `e_f_date` = '$e_f_date', `i_date` = '$i_date', `state_`='$state_', `locality`='$locality'";
+  
+    //, `power`, `phone`, `phone2`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
 
 
-    $res = mysqli_query($db, $sql);
+    $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);;
+
+  // $result = mysqli_query($conn, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($conn), E_USER_ERROR);
+    
     if ($res) {
       $success = true;
     } else {
       $success = false;
     }
-  };
 }
+
 
 $long = '';
 $latg = '';
 $userg = 0;
-
-
 
 if (isset($_GET['site'])) {
 
@@ -170,28 +284,28 @@ if (isset($_GET['user'])) {
       <form method="post" enctype="multipart/form-data" accept-charset="utf-8">
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Quarantine Name</label>
-          <input required type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
+          <input  type="text" class="form-control" name="name" id="qid" placeholder="Quarantine Name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Quarantine Address</label>
-          <input required type="text" class="form-control" name="adress" id="exampleFormControlInput1" placeholder="Quarantine Adress">
+          <input  type="text" class="form-control" name="adress" id="qaddress" placeholder="Quarantine Adress">
         </div>
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Total capacity (beds)</label>
-          <input required type="number" class="form-control" name="power" id="exampleFormControlInput1" placeholder="Quarantine Power">
+          <input  type="number" class="form-control" name="power" id="beds" placeholder="Quarantine Power">
         </div>
         <div class="form-group col-md-12">
           <label for="owner_name">Owner Name</label>
-          <input required type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
+          <input  type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
         </div>
         <div class="form-group col-md-12">
           <label for="owner_contact">Owner Contact </label>
-          <input required type="text" class="form-control" name="owner_contact" id="owner_contact" placeholder="">
+          <input  type="text" class="form-control" name="owner_contact" id="owner_contact" placeholder="">
         </div>
         <div class="form-group col-md-12">
           <label for="project_manager">Project Manager</label>
-          <input required type="text" class="form-control" name="project_manager" id="project_manager" placeholder="">
+          <input  type="text" class="form-control" name="project_manager" id="project_manager" placeholder="">
         </div>
 
 
@@ -231,11 +345,11 @@ if (isset($_GET['user'])) {
           <div class=" row">
             <div class="form-group col-md-6">
               <label for="needs">Phone</label>
-              <input required class="form-control" name="phone" id="needs"></textarea>
+              <input  class="form-control" name="phone" id="needs"></textarea>
             </div>
             <div class="form-group col-md-6">
               <label for="needs">Another Phone </label>
-              <input required class="form-control" name="phone2" id="needs"></textarea>
+              <input  class="form-control" name="phone2" id="needs"></textarea>
             </div>
           </div>
         </div>
@@ -323,15 +437,15 @@ if (isset($_GET['user'])) {
           <div class=" row">
             <div class="form-group col-md-4">
               <label for="init_budget">Initial budget in SDG</label>
-              <input required type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
+              <input  type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
             </div>
             <div class="form-group col-md-4">
               <label for="e_f_date">Expected finishing date</label>
-              <input required type="date" class="form-control" name="e_f_date" id="e_f_date" placeholder="" value="">
+              <input  type="date" class="form-control" name="e_f_date" id="e_f_date" placeholder="" value="">
             </div>
             <div class="form-group col-md-4">
               <label for="i_date">Inspection date</label>
-              <input required type="date" class="form-control" name="i_date" id="i_date" placeholder="" value="">
+              <input  type="date" class="form-control" name="i_date" id="i_date" placeholder="" value="">
             </div>
           </div>
         </div>
@@ -401,15 +515,18 @@ if (isset($_GET['user'])) {
         <!--States Loclitis End -->
 
         <div class="col-md-12">
+        
           <div class=" row">
             <div class="form-group col-md-3">
               <label for="lon">Longitude</label>
-              <input required type="text" class="form-control" name="lon" id="lon" placeholder="Longitude" value="<?php echo $long; ?>">
+              <input  type="text" class="form-control" name="lon" id="lon" placeholder="Longitude" value="<?php echo $long; ?>">
             </div>
             <div class="form-group col-md-3">
               <label for="lat">Latitude</label>
-              <input required type="text" class="form-control" name="lat" id="lat" placeholder="Latitude" value="<?php echo $latg; ?>">
+              <input  type="text" class="form-control" name="lat" id="lat" placeholder="Latitude" value="<?php echo $latg; ?>">
             </div>
+
+
             <div class="form-group col-md-6">
               <label for="myFile">Upload Image Only .JPG</label>
               <input type="file" name="myFile" id="myFile">
@@ -603,6 +720,38 @@ if (isset($_GET['user'])) {
     ?>
 
     var myVar = setInterval(myTimer, 5000);
+
+    function setdefault(id) {
+      document.getElementById(id).value = '<?php echo $olddescription ?>'; // this is fucking dangerous
+      document.getElementById("qaddress").value = '<?php echo $oldadress ?>';
+      document.getElementById("capacity").value = '<?php echo $oldcapacity ?>';
+      document.getElementById("power").value = '<?php echo $oldpower ?>';
+      document.getElementById("owner_name").value = '<?php echo $oldowner_name ?>';
+      document.getElementById("owner_contact").value = '<?php echo $oldowner_contact ?>';
+      document.getElementById("project_manager").value = '<?php echo $oldproject_manager ?>';
+      document.getElementById("stake_holders").value = '<?php echo $oldstakeholders ?>';
+      document.getElementById("i_teams").value = '<?php echo $oldi_teams ?>';
+      document.getElementById("r_t_contact").value = '<?php echo $oldr_t_contacts ?>';
+      document.getElementById("phone").value = '<?php echo $oldphone ?>';
+      document.getElementById("phone2").value = '<?php echo $oldphone2 ?>';
+
+      // qid
+      /*qaddress
+      power
+      owner_name
+      owner_contact
+      project_manager
+      stakeholders
+      i_teams
+      r_t_contacts
+      phone
+      phone2
+      medical_usage
+      building_status
+      owner_acceptance
+      resistnce_acceptance*/
+
+    }
 
     function myTimer() {
       vectorLayer.setSource(new ol.source.Vector({

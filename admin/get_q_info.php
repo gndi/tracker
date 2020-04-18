@@ -119,6 +119,8 @@
 
     $table = '';
     $id = $row['id'];
+    $table .= '<tr><th><a href="/admin/edit_as_new.php?id='.$id.'">Edit as new</a></th><td></td></tr>';
+    
     $table .= '<tr><th>ID</th><td>' . $id . '</td></tr>';
     $name = $row['name'];
     $table .= '<tr><th>Name</th><td>' . $name . '</td></tr>';
