@@ -109,26 +109,29 @@ $row = mysqli_fetch_assoc($result);
 
 $table='';
 $id=$row['id']; $table.='<tr><th>ID</th><td>'.$id.'</td></tr>';
-$name=$row['name']; $table.='<tr><th>Name</th><td>'.$name.'</td></tr>';
-$info=$row['info'];$table.='<tr><th>Information</th><td>'.$info.'</td></tr>';
-$power=$row['power'];$table.='<tr><th>Power</th><td>'.$power.'</td></tr>';
-$phone=$row['phone'];$table.='<tr><th>Phone</th><td>'.$phone.'</td></tr>';
-$phone2=$row['phone2'];$table.='<tr><th>Another Phone</th><td>'.$phone2.'</td></tr>';
+$name=$row['name']; $table.='<tr><th>Name</th><td>'.$name.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'name\',\'Name\',\''.$name.'\',false)" role="button">...</a></td></tr>';
+
+
+$info=$row['info'];$table.='<tr><th>Information</th><td>'.$info.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'info\',\'Information\',\''.$info.'\',false)" role="button">...</a></td></tr>';
+$power=$row['power'];$table.='<tr><th>Power</th><td>'.$power.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'power\',\'Power\',\''.$power.'\',\'number\')" role="button">...</a></td></tr>';
+$phone=$row['phone'];$table.='<tr><th>Phone</th><td>'.$phone.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'phone\',\'Phone\',\''.$phone.'\',\'text\')" role="button">...</a></td></tr>';
+$phone2=$row['phone2'];$table.='<tr><th>Another Phone</th><td>'.$phone2.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'phone2\',\'Another Phone\',\''.$phone2.'\',\'text\')" role="button">...</a></td></tr>';
 $lon=$row['lon'];$table.='<tr><th>Longitude</th><td>'.$lon.'</td></tr>';
 $lat=$row['lat'];$table.='<tr><th>Latitude</th><td>'.$lat.'</td></tr>';
-$adress=$row['adress'];$table.='<tr><th>Adress</th><td>'.$adress.'</td></tr>';
+
+$adress=$row['adress'];$table.='<tr><th>Adress</th><td>'.$adress.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'adress\',\'Adress\',\''.$adress.'\',\'text\')" role="button">...</a></td></tr>';
 $state_=$row['state_'];$table.='<tr><th>State</th><td>'.getstatename($db,$state_).'</td></tr>';
 $locality=$row['locality'];$table.='<tr><th>Locality</th><td>'.getlocalityname($db,$locality).'</td></tr>';
-$owner_name=$row['owner_name'];$table.='<tr><th>Owner Name</th><td>'.$owner_name.'</td></tr>';
-$owner_contact=$row['owner_contact'];$table.='<tr><th>Owner Contact</th><td>'.$owner_contact.'</td></tr>';
+$owner_name=$row['owner_name'];$table.='<tr><th>Owner Name</th><td>'.$owner_name.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'owner_name\',\'Owner Name\',\''.$owner_name.'\',\'text\')" role="button">...</a></td></tr>';
+$owner_contact=$row['owner_contact'];$table.='<tr><th>Owner Contact</th><td>'.$owner_contact.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'owner_contact\',\'Owner Contact\',\''.$owner_contact.'\',\'text\')" role="button">...</a></td></tr>';
 $project_manager=$row['project_manager'];$table.='<tr><th>Project Manager</th><td>'.$project_manager.'</td></tr>';
-$stakeholders=$row['stakeholders'];$table.='<tr><th>Stakeholders</th><td>'.$stakeholders.'</td></tr>';
-$i_teams=$row['i_teams'];$table.='<tr><th>Inspection teams</th><td>'.$i_teams.'</td></tr>';
-$r_t_contacts=$row['r_t_contacts'];$table.='<tr><th>Resistance team contacts</th><td>'.$r_t_contacts.'</td></tr>';
+$stakeholders=$row['stakeholders'];$table.='<tr><th>Stakeholders</th><td>'.$stakeholders.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'stakeholders\',\'Stakeholders\',\''.$stakeholders.'\',false)" role="button">...</a></td></tr>';
+$i_teams=$row['i_teams'];$table.='<tr><th>Inspection teams</th><td>'.$i_teams.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'i_teams\',\'Inspection teams\',\''.$i_teams.'\',false)" role="button">...</a></td></tr>';
+$r_t_contacts=$row['r_t_contacts'];$table.='<tr><th>Resistance team contacts</th><td>'.$r_t_contacts.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'r_t_contacts\',\'Resistance team contacts\',\''.$r_t_contacts.'\',false)" role="button">...</a></td></tr>';
 
-$init_budget=$row['init_budget'];$table.='<tr><th>Initial budget in SDG</th><td>'.$init_budget.'</td></tr>';
-$e_f_date=$row['e_f_date'];$table.='<tr><th>Expected finishing date</th><td>'.$e_f_date.'</td></tr>';
-$i_date=$row['i_date'];$table.='<tr><th>Inspection date</th><td>'.$i_date.'</td></tr>';
+$init_budget=$row['init_budget'];$table.='<tr><th>Initial budget in SDG</th><td>'.$init_budget.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'init_budget\',\'Initial budget in SDG\',\''.$init_budget.'\',\'number\')" role="button">...</a></td></tr>';
+$e_f_date=$row['e_f_date'];$table.='<tr><th>Expected finishing date</th><td>'.$e_f_date.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'e_f_date\',\'Expected finishing date\',\''.$e_f_date.'\',\'date\')" role="button">...</a></td></tr>';
+$i_date=$row['i_date'];$table.='<tr><th>Inspection date</th><td>'.$i_date.'</td><td><a class="btn btn-outline-secondary btn-sm" onclick="editmodal(\''.$id.'\',\'i_date\',\'Inspection date\',\''.$i_date.'\',\'date\')" role="button">...</a></td></tr>';
 $i=0;$h='';
 while($i<=1){
     $h.="<a class='dropdown-item' href='./set_hc_val.php?medical_usage=".$i."&id=".$id."'>Set: ".getmu($i)."</a>";
@@ -240,7 +243,7 @@ $h1 ="<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdo
 $manager_id=$row['manager_id'];$table.='<tr><th>Project Manager</th><td>'.getmanager_name($db,$manager_id).'</td><td>'.$h1.'</td></tr>';
           
 
-$table.='<tr><th>Last Issue Date</th><td>'.getlast_isuse_date($db,$id).'</td><td><a class="btn btn-primary" href="new_issue.php?id='.$id.'" role="button">Add issue</a></td></tr>';
+$table.='<tr><th>Last Issue Date</th><td>'.getlast_isuse_date($db,$id).'</td><td><a class="btn btn-outline-secondary" href="new_issue.php?id='.$id.'" role="button">+</a></td></tr>';
 $table.='<tr><th>Last Issue Time</th><td>'.getlast_isuse_time($db,$id).'</td></tr>';            
 
 

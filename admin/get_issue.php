@@ -25,6 +25,8 @@ $des = $row['issue_description'];
 $img =$row['img'];
 $made_by = getmanager_name($db,$row['made_by']);
 $id = $row['id'];
+$due_date = $row['due_date'];
+$is_done = $row['is_done'];
 
 echo '<div class="card text-center" style="max-width:500px;">
 

@@ -18,6 +18,7 @@ if (isset($_GET[$name])){
 	}else{
 		$q = "UPDATE `hc` SET `$name`=".$el[$name]." WHERE id=$id " ;
 	}
+	mysqli_query($db,"set names utf8");
 mysqli_query($db,$q);
 
 }
