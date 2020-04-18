@@ -6,7 +6,7 @@
    $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
    $sitelink = "http://localhost/covid/";
-   $sitelink = "http://127.0.0.1:8004/";
+   //$sitelink = "http://127.0.0.1:80/";
    $salt='Hellocovid';
    $sitename="Covid-19 Managment - Sudan";
 ?>
