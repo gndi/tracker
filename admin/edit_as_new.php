@@ -75,19 +75,33 @@ $oldstate = $row["state"];
 $oldlocality = $row["locality"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['name']));
-  if (!isset($name)){$name = $oldname;}
+  if (!isset($name)) {
+    $name = $oldname;
+  }
   $info = htmlspecialchars(mysqli_real_escape_string($db, $_POST['info']));
-  if (!isset($info)){$info = $oldinfo;}
+  if (!isset($info)) {
+    $info = $oldinfo;
+  }
   $lon = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lon']));
-  if (!isset($lon)){$lon = $oldlon;}
+  if (!isset($lon)) {
+    $lon = $oldlon;
+  }
   $lat = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lat']));
-  if (!isset($lat)){$lat = $oldlat;}
+  if (!isset($lat)) {
+    $lat = $oldlat;
+  }
   $adress = htmlspecialchars(mysqli_real_escape_string($db, $_POST['adress']));
-  if (!isset($adress)){$adress=$oldadress;}
+  if (!isset($adress)) {
+    $adress = $oldadress;
+  }
   $power = htmlspecialchars(mysqli_real_escape_string($db, $_POST['power']));
-  if (!isset($power)){$power = $oldpower;}
+  if (!isset($power)) {
+    $power = $oldpower;
+  }
   $phone = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone']));
-  if (!isset($phone)){$phone = $oldphone;}
+  if (!isset($phone)) {
+    $phone = $oldphone;
+  }
   $phone2 = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone2']));
   if (!isset($phone)) {
     $phone2 = $oldphone;
@@ -182,24 +196,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   // the update part happens here; make sure to update the html 
-    mysqli_query($db, "SET NAMES 'utf8'");
-    mysqli_query($db, 'SET CHARACTER SET utf8');
-    //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
-    $sql = "update `hc` set `name`= '$name' , `info`= '$info', `phone` = '$phone', `phone2` = '$phone2', `adress` = '$adress', `owner_name` = '$owner_name', `owner_contact` = '$owner_contact', `project_manager`='$project_manager', `stakeholders`='$stakeholders',
+  mysqli_query($db, "SET NAMES 'utf8'");
+  mysqli_query($db, 'SET CHARACTER SET utf8');
+  //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
+  $sql = "update `hc` set `name`= '$name' , `info`= '$info', `phone` = '$phone', `phone2` = '$phone2', `adress` = '$adress', `owner_name` = '$owner_name', `owner_contact` = '$owner_contact', `project_manager`='$project_manager', `stakeholders`='$stakeholders',
     `i_teams`='$i_teams', `r_t_contacts`='$r_t_contacts', `medical_usage`='$medical_usage', `building_status`='$building_status', `owner_acceptance`= '$owner_acceptance',`resistnce_acceptance`= '$resistnce_acceptance', `building_type`='$building_type',`init_budget`='$init_budget',  `e_f_date` = '$e_f_date', `i_date` = '$i_date', `state_`='$state_', `locality`='$locality'";
-  
-    //, `power`, `phone`, `phone2`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
+
+  //, `power`, `phone`, `phone2`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
 
 
-    $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);;
+  $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);;
 
   // $result = mysqli_query($conn, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($conn), E_USER_ERROR);
-    
-    if ($res) {
-      $success = true;
-    } else {
-      $success = false;
-    }
+
+  if ($res) {
+    $success = true;
+  } else {
+    $success = false;
+  }
 }
 
 
@@ -277,35 +291,42 @@ if (isset($_GET['user'])) {
   }
 </style>
 
+
+<div class="alert alert-primary" role="alert">
+  <p>Leave empty if you don't want to update the field</p>
+</div>
+
 <div class="row">
+
+
   <div class="col-sm-6" style="border-style: solid;border-width: 2px;border-color:#007BFF;">
 
     <div style="overflow-x:auto;height:450px;" id="form">
       <form method="post" enctype="multipart/form-data" accept-charset="utf-8">
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Quarantine Name</label>
-          <input  type="text" class="form-control" name="name" id="qid" placeholder="Quarantine Name">
+          <input type="text" class="form-control" name="name" id="qid" placeholder="Quarantine Name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Quarantine Address</label>
-          <input  type="text" class="form-control" name="adress" id="qaddress" placeholder="Quarantine Adress">
+          <input type="text" class="form-control" name="adress" id="qaddress" placeholder="Quarantine Adress">
         </div>
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Total capacity (beds)</label>
-          <input  type="number" class="form-control" name="power" id="beds" placeholder="Quarantine Power">
+          <input type="number" class="form-control" name="power" id="beds" placeholder="Quarantine Power">
         </div>
         <div class="form-group col-md-12">
           <label for="owner_name">Owner Name</label>
-          <input  type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
+          <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
         </div>
         <div class="form-group col-md-12">
           <label for="owner_contact">Owner Contact </label>
-          <input  type="text" class="form-control" name="owner_contact" id="owner_contact" placeholder="">
+          <input type="text" class="form-control" name="owner_contact" id="owner_contact" placeholder="">
         </div>
         <div class="form-group col-md-12">
           <label for="project_manager">Project Manager</label>
-          <input  type="text" class="form-control" name="project_manager" id="project_manager" placeholder="">
+          <input type="text" class="form-control" name="project_manager" id="project_manager" placeholder="">
         </div>
 
 
@@ -345,11 +366,11 @@ if (isset($_GET['user'])) {
           <div class=" row">
             <div class="form-group col-md-6">
               <label for="needs">Phone</label>
-              <input  class="form-control" name="phone" id="needs"></textarea>
+              <input class="form-control" name="phone" id="needs"></textarea>
             </div>
             <div class="form-group col-md-6">
               <label for="needs">Another Phone </label>
-              <input  class="form-control" name="phone2" id="needs"></textarea>
+              <input class="form-control" name="phone2" id="needs"></textarea>
             </div>
           </div>
         </div>
@@ -437,15 +458,15 @@ if (isset($_GET['user'])) {
           <div class=" row">
             <div class="form-group col-md-4">
               <label for="init_budget">Initial budget in SDG</label>
-              <input  type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
+              <input type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
             </div>
             <div class="form-group col-md-4">
               <label for="e_f_date">Expected finishing date</label>
-              <input  type="date" class="form-control" name="e_f_date" id="e_f_date" placeholder="" value="">
+              <input type="date" class="form-control" name="e_f_date" id="e_f_date" placeholder="" value="">
             </div>
             <div class="form-group col-md-4">
               <label for="i_date">Inspection date</label>
-              <input  type="date" class="form-control" name="i_date" id="i_date" placeholder="" value="">
+              <input type="date" class="form-control" name="i_date" id="i_date" placeholder="" value="">
             </div>
           </div>
         </div>
@@ -515,15 +536,15 @@ if (isset($_GET['user'])) {
         <!--States Loclitis End -->
 
         <div class="col-md-12">
-        
+
           <div class=" row">
             <div class="form-group col-md-3">
               <label for="lon">Longitude</label>
-              <input  type="text" class="form-control" name="lon" id="lon" placeholder="Longitude" value="<?php echo $long; ?>">
+              <input type="text" class="form-control" name="lon" id="lon" placeholder="Longitude" value="<?php echo $long; ?>">
             </div>
             <div class="form-group col-md-3">
               <label for="lat">Latitude</label>
-              <input  type="text" class="form-control" name="lat" id="lat" placeholder="Latitude" value="<?php echo $latg; ?>">
+              <input type="text" class="form-control" name="lat" id="lat" placeholder="Latitude" value="<?php echo $latg; ?>">
             </div>
 
 
