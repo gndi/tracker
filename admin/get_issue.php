@@ -58,13 +58,27 @@ echo '<p>All images related to this issue:</p>';
 // echo "The id is: $id";
   $q = "select * from `images` where issue_id=$issue_id";
 $result = mysqli_query($db, $q);
+echo "<ul>";
 while ($row = mysqli_fetch_assoc($result)) {
   $img = $row["img"];
   $abspath = "admin/" . $img;
-  echo '<a href="../' . $abspath . '">Image url</a>
-  <hr>';
-  
+  echo '<li><a href="../' . $abspath . '">Download file</a></li>';
 }
+echo "</ul>";
+
+echo '<hr>';
+echo '<p>All documents related to this issue:</p>';
+
+// echo "The id is: $id";
+$q = "select * from `files` where issue_id=$issue_id";
+$result = mysqli_query($db, $q);
+echo "<ul>";
+while ($row = mysqli_fetch_assoc($result)) {
+  $img = $row["img"];
+  $abspath = "admin/" . $img;
+  echo '<li><a href="../' . $abspath . '">Download file</a></li>';
+}
+echo "</ul>"
 
 
 

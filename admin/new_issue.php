@@ -72,11 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   foreach ($_FILES["myFile1"]["tmp_name"] as $key => $tmp_name) {
     $uploaddir = 'files/';
 
-    $path = $_FILES['myFile1']['name'];
+    $path = $_FILES['myFile1']['name'][$key];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
 
     $uploadfile = $uploaddir . basename($_FILES['myFile1']['tmp_name'][$key]);
-    $filename = $uploadfile . $ext;
+    $filename = $uploadfile . '.';
+    $filename .= $ext;
     $fname = $filename;
 
     if (move_uploaded_file($_FILES['myFile1']['tmp_name'][$key], $filename)) {
