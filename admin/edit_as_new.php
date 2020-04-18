@@ -200,12 +200,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   mysqli_query($db, 'SET CHARACTER SET utf8');
   //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
   $sql = "update `hc` set `name`= '$name' , `info`= '$info', `phone` = '$phone', `phone2` = '$phone2', `adress` = '$adress', `owner_name` = '$owner_name', `owner_contact` = '$owner_contact', `project_manager`='$project_manager', `stakeholders`='$stakeholders',
-    `i_teams`='$i_teams', `r_t_contacts`='$r_t_contacts', `medical_usage`='$medical_usage', `building_status`='$building_status', `owner_acceptance`= '$owner_acceptance',`resistnce_acceptance`= '$resistnce_acceptance', `building_type`='$building_type',`init_budget`='$init_budget',  `e_f_date` = '$e_f_date', `i_date` = '$i_date', `state_`='$state_', `locality`='$locality'";
+    `i_teams`='$i_teams', `r_t_contacts`='$r_t_contacts', `medical_usage`='$medical_usage', `building_status`='$building_status', `owner_acceptance`= '$owner_acceptance',`resistnce_acceptance`= '$resistnce_acceptance', `building_type`='$building_type',`init_budget`='$init_budget',  `e_f_date` = '$e_f_date', `i_date` = '$i_date', `state_`='$state_', `locality`='$locality' where `id` = '$qid'";
 
   //, `power`, `phone`, `phone2`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
 
 
-  $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);;
+  $res = mysqli_query($db, $sql);
+  //or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);;
 
   // $result = mysqli_query($conn, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($conn), E_USER_ERROR);
 
@@ -742,37 +743,6 @@ if (isset($_GET['user'])) {
 
     var myVar = setInterval(myTimer, 5000);
 
-    function setdefault(id) {
-      document.getElementById(id).value = '<?php echo $olddescription ?>'; // this is fucking dangerous
-      document.getElementById("qaddress").value = '<?php echo $oldadress ?>';
-      document.getElementById("capacity").value = '<?php echo $oldcapacity ?>';
-      document.getElementById("power").value = '<?php echo $oldpower ?>';
-      document.getElementById("owner_name").value = '<?php echo $oldowner_name ?>';
-      document.getElementById("owner_contact").value = '<?php echo $oldowner_contact ?>';
-      document.getElementById("project_manager").value = '<?php echo $oldproject_manager ?>';
-      document.getElementById("stake_holders").value = '<?php echo $oldstakeholders ?>';
-      document.getElementById("i_teams").value = '<?php echo $oldi_teams ?>';
-      document.getElementById("r_t_contact").value = '<?php echo $oldr_t_contacts ?>';
-      document.getElementById("phone").value = '<?php echo $oldphone ?>';
-      document.getElementById("phone2").value = '<?php echo $oldphone2 ?>';
-
-      // qid
-      /*qaddress
-      power
-      owner_name
-      owner_contact
-      project_manager
-      stakeholders
-      i_teams
-      r_t_contacts
-      phone
-      phone2
-      medical_usage
-      building_status
-      owner_acceptance
-      resistnce_acceptance*/
-
-    }
 
     function myTimer() {
       vectorLayer.setSource(new ol.source.Vector({
