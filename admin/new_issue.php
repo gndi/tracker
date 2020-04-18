@@ -109,10 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row_cnt = mysqli_num_rows(mysqli_query($db, $qq)); // this is dumb
 
     // for image database
-    for ($i = 0; $i < count($_FILES['myFile']['tmp_name']); $i++) {
+    for ($i = 0; $i < count($_FILES['myFile']['name']); $i++) {
       $uploaddir = 'img/';
       $extenstion = ".jpg";
-      $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name'][$key]);
+      $uploadfile = $uploaddir . basename($_FILES['myFile']['tmp_name'][$i]);
       $filename = $uploadfile . $extenstion;
       $img = $filename;
 
@@ -131,9 +131,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // for file ups
     for ($i = 0; $i < count($_FILES['myFile1']['name']); $i++) {
       $uploaddir = 'files/';
-      $path = $_FILES['myFile1']['name'][$key];
+      $path = $_FILES['myFile1']['name'][$i];
       $ext = pathinfo($path, PATHINFO_EXTENSION);
-      $uploadfile = $uploaddir . basename($_FILES['myFile1']['tmp_name'][$key]);
+      $uploadfile = $uploaddir . basename($_FILES['myFile1']['tmp_name'][$i]);
       $filename = $uploadfile.  '.';
       $fname = $filename. $ext;
 
