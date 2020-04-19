@@ -152,8 +152,11 @@
       $phone = $row['phone'];
       $phone2 = $row['phone2'];
       // fix me add other acceptance criterion
+
       $o_a = $row['owner_acceptance'];
       $r_a = $row['resistnce_acceptance'];
+      $b_s = $row["building_status"];
+      $r_s = $row["readiness_status"];
 
 
       $allcount_query = "SELECT count(*) as allcount FROM cases WHERE (hc_id=$id and state<2);";
@@ -161,11 +164,17 @@
       $allcount_fetch = mysqli_fetch_array($allcount_result);
       $allcount = $allcount_fetch['allcount'];
 
+      /* make the checks here for:
+        owner acceptance
 
-      if ($o_a == 1 and $r_a == 1) {
+
+
+      */
+      // building status == 0 is a bug. It should be 1 for success (for consistency)
+      if ($o_a == 1 and $r_a == 1 and $b_s == 1 and $r_s == 0) {
 
         $icon = 'green.png';
-      } elseif ($o_a == 1 or $r_a == 1) {
+      } elseif ($o_a == 1 or $r_a == 1 or $b_s == 1 or $r_s == 0) {
         $icon = 'yellow.png';
       } else {
         $icon = 'red.png';
