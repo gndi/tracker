@@ -87,4 +87,6 @@ When adding a new quarantine, do the following:
 - get the state from table cities (dropdown menu)
 - get cities in selected states (select * from cities where stateid = ?)
 - get neighborhoods from the selected state AND city
+- add labs view
+- fix the limit issue
 
