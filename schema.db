@@ -1,7 +1,26 @@
-
-
-create table lab (
-
-);
-
-
+create table labs (
+id integer primary key auto_increment,
+name varchar(255),
+patient_name varchar(255),
+gender bool,
+patient_age integer,
+ethnicity integer,
+phone_number varchar(12),
+patient_address varchar(255),
+case_type integer,
+physician_name varchar(255),
+physician_mobile varchar(12),
+sample_type integer,
+test_reason integer,
+sample_day datetime,
+collection_date datetime,
+accordance integer,
+patient_condition integer,
+clinical_picture integer,
+recent_travel integer,
+comorobidities integer,
+additional_comments varchar(1000),
+reference_number varchar(50),
+result varchar(100),
+created_at datetime
+)

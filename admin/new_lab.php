@@ -3,6 +3,8 @@ include('../config.php');
 include('./session.php');
 include('./header.php');
 //include('./includes/setting.php');
+
+
 function saveimage($fff)
 {
   $file_name = $fff;
@@ -31,62 +33,60 @@ function saveimage($fff)
 };
 
 // TODO make it visible only for medical staff
-if ($login_permission == 1 or $login_permission == 0) {
+if ($login_permission == 1 or $login_permission == 0 or $login_permission == 10) {
 } else {
   header("location:./index.php");
 }
 
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['name']));
-  $info = htmlspecialchars(mysqli_real_escape_string($db, $_POST['info']));
-  $lon = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lon']));
-  $lat = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lat']));
-  $adress = htmlspecialchars(mysqli_real_escape_string($db, $_POST['adress']));
-  $power = htmlspecialchars(mysqli_real_escape_string($db, $_POST['power']));
-  $phone = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone']));
-  $phone2 = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone2']));
-  $state = 0;
-  $owner_name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['owner_name']));
-  $owner_contact = htmlspecialchars(mysqli_real_escape_string($db, $_POST['owner_contact']));
-  $project_manager = htmlspecialchars(mysqli_real_escape_string($db, $_POST['project_manager']));
-  $stakeholders = htmlspecialchars(mysqli_real_escape_string($db, $_POST['stakeholders']));
-  $i_teams = htmlspecialchars(mysqli_real_escape_string($db, $_POST['i_teams']));
-  $r_t_contacts = htmlspecialchars(mysqli_real_escape_string($db, $_POST['r_t_contacts']));
-  $medical_usage = htmlspecialchars(mysqli_real_escape_string($db, $_POST['medical_usage']));
-  $building_status = htmlspecialchars(mysqli_real_escape_string($db, $_POST['building_status']));
-  $owner_acceptance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['owner_acceptance']));
-  $resistnce_acceptance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['resistnce_acceptance']));
-  $readiness_status = htmlspecialchars(mysqli_real_escape_string($db, $_POST['readiness_status']));
-  $building_type = htmlspecialchars(mysqli_real_escape_string($db, $_POST['building_type']));
-  $init_budget = htmlspecialchars(mysqli_real_escape_string($db, $_POST['init_budget']));
-  $e_f_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['e_f_date']))));
-  $i_date = date("Y-m-d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['i_date']))));
-  $state_ = htmlspecialchars(mysqli_real_escape_string($db, $_POST['state_']));
-  $locality = htmlspecialchars(mysqli_real_escape_string($db, $_POST['locality']));
-  if (isset($_POST['myFile'])) {
-    $img = saveimage($_FILES['myFile']['tmp_name']);
+  $patient_name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_name']));
+  $gender = htmlspecialchars(mysqli_real_escape_string($db, $_POST['gender']));
+  $patient_age = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_age']));
+  $ethnicity = htmlspecialchars(mysqli_real_escape_string($db, $_POST['ethnicity']));
+  $phone_number = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone_number']));
+  $patient_address = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_address']));
+  $case_type = htmlspecialchars(mysqli_real_escape_string($db, $_POST['case_type']));
+
+  $to_lab = htmlspecialchars(mysqli_real_escape_string($db, $_POST['to_lab']));
+  $with_cases = htmlspecialchars(mysqli_real_escape_string($db, $_POST['contact_with_cases']));
+  $arrival_date = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_arrival_date']));
+  $additional_comments = htmlspecialchars(mysqli_real_escape_string($db, $_POST['additional_comments']));
+
+  $physician_name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['physician_name']));
+  $physician_mobile = htmlspecialchars(mysqli_real_escape_string($db, $_POST['physician_mobile']));
+  $sample_type = htmlspecialchars(mysqli_real_escape_string($db, $_POST['sample_type']));
+  $test_reason = htmlspecialchars(mysqli_real_escape_string($db, $_POST['test_reason']));
+  // date("Y-m-d H:i:s"
+  $sample_day = date("Y-m-d H:i:s", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['sample_day']))));
+  $collection_date = date("Y-m-d H:i:s", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['collection_date']))));
+  $accordance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['accordance']));
+  $patient_condition = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_condition']));
+  $clinical_picture = htmlspecialchars(mysqli_real_escape_string($db, $_POST['clinical_picture']));
+  $recent_travel = htmlspecialchars(mysqli_real_escape_string($db, $_POST['recent_travel']));
+  $comorobidities = htmlspecialchars(mysqli_real_escape_string($db, $_POST['comorobidities']));
+  // leave this for other form
+  /*$reference_number = htmlspecialchars(mysqli_real_escape_string($db, $_POST['reference_number']));
+  $result = htmlspecialchars(mysqli_real_escape_string($db, $_POST['result']));
+  $created_at = date("Y_m_d", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['created_at']))));
+*/
+
+  mysqli_query($db, "SET NAMES 'utf8'");
+  mysqli_query($db, 'SET CHARACTER SET utf8');
+
+  $sql = "INSERT INTO `labs` (`name`,`patient_name`,`gender`,`patient_age`,`ethnicity`,`phone_number`,`patient_address`,`case_type`,`physician_name`,`physician_mobile`,`sample_type`,`test_reason`,`sample_day`,`collection_date`,`accordance`,`patient_condition`,`clinical_picture`,`recent_travel`,`comorobidities`,`additional_comments`, `to_lab`, `patient_arrival_date`, `contact_with_case`) VALUES ('$name','$patient_name','$gender','$patient_age','$ethnicity','$phone_number','$patient_address','$case_type','$physician_name','$physician_mobile','$sample_type','$test_reason','$sample_day','$collection_date','$accordance','$patient_condition','$clinical_picture','$recent_travel','$comorobidities','$additional_comments','$to_lab', '$arrival_date', '$with_cases')";
+
+
+  // $result = mysqli_query($conn, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($conn), E_USER_ERROR);
+  $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
+  if ($res) {
+    $success = true;
   } else {
-    $img = 'No image';
+    $success = false;
   }
-
-
-  if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($power) and isset($phone) and isset($phone2) and  isset($state) and isset($adress)) {
-
-    mysqli_query($db, "SET NAMES 'utf8'");
-    mysqli_query($db, 'SET CHARACTER SET utf8');
-    //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
-    $sql = "INSERT INTO `hc` ( `name`, `info`, `power`, `phone`, `phone2`, `lon`, `lat`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', $lon, $lat, '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
-
-
-    $res = mysqli_query($db, $sql);
-    if ($res) {
-      $success = true;
-    } else {
-      $success = false;
-    }
-  };
-}
+};
 
 $long = '';
 $latg = '';
@@ -168,7 +168,7 @@ if (isset($_GET['user'])) {
   <div class="col-sm-6" style="border-style: solid;border-width: 2px;border-color:#007BFF;">
 
     <div style="overflow-x:auto;height:450px;" id="form">
-      <form method="post" enctype="multipart/form-data" accept-charset="utf-8">
+      <form method="post" accept-charset="utf-8">
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Name (hosptial, lab, or other)</label>
           <input required type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
@@ -176,7 +176,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-name">Patient name</label>
-          <input required type="text" class="form-control" name="patient-name" id="patient-name" placeholder="Quarantine Name">
+          <input required type="text" class="form-control" name="patient_name" id="patient-name" placeholder="Patient Name">
         </div>
 
         <div class="form-group col-md-12">
@@ -190,28 +190,28 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-age">Age</label>
-          <input required type="number" class="form-control" name="patient-age" id="patient-age" placeholder="Quarantine Adress">
+          <input required type="number" class="form-control" name="patient_age" id="patient-age" placeholder="Patient age">
         </div>
 
         <div class="form-group col-md-12">
           <label for="ethnicity">Ethnicity</label>
-          <input required type="text" class="form-control" name="ethnicity" id="ethnicity" placeholder="Quarantine Adress">
+          <input required type="number" class="form-control" name="ethnicity" id="ethnicity" placeholder="Patient ethnicity (free text)">
         </div>
 
         <div class="form-group col-md-12">
           <label for="phone-number">Phone number</label>
-          <input required type="text" class="form-control" name="phone-number" id="phone-number" placeholder="Quarantine Adress">
+          <input required type="text" class="form-control" name="phone_number" id="phone-number" placeholder="Phone number">
         </div>
 
         <div class="form-group col-md-12">
           <label for="patient-address">Patient address</label>
-          <input required type="text" class="form-control" name="patient-address" id="patient-address" placeholder="Quarantine Adress">
+          <input required type="text" class="form-control" name="patient_address" id="patient-address" placeholder="Patient address">
         </div>
 
 
         <div class="form-group col-md-12">
           <label for="case-type">Case category</label>
-          <select class="form-control" name="case-type" id="case-type">
+          <select class="form-control" name="case_type" id="case-type">
             <option selected>Select option</option>
             <option value='0'>Suspected case</option>
             <option value='1'>Probable case</option>
@@ -220,12 +220,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="physician-name">Physician name</label>
-          <input required type="number" class="form-control" name="physician-name" id="physician-name" placeholder="Quarantine Adress">
+          <input required type="text" class="form-control" name="physician_name" id="physician-name" placeholder="Physician name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="physician-mobile">Physician mobile</label>
-          <input required type="number" class="form-control" name="physician-mobile" id="physician-mobile" placeholder="Quarantine Adress">
+          <input required type="text" class="form-control" name="physician_mobile" id="physician-mobile" placeholder="Physician mobile">
         </div>
         <hr>
 
@@ -233,7 +233,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="sample-type">Sample type</label>
-          <select class="form-control" name="sample-type" id="sample-type">
+          <select class="form-control" name="sample_type" id="sample-type">
             <option selected>Select option</option>
             <option value='0'>NS</option>
             <option value='1'>TS</option>
@@ -246,8 +246,8 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="test-reason">Reason for testing</label>
-          <select class="form-control" name="test-reason" id="test-reason">
-            <option selected>Select option</option>
+          <select class="form-control" name="test_reason" id="test-reason">
+            <option value='-1' selected>Select option</option>
             <option value='0'>Screening</option>
             <option value='1'>Diagnosis</option>
             <option value='2'>Follow-up</option>
@@ -256,7 +256,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="sample-day">Sampling day</label>
-          <select class="form-control" name="sample-day" id="sample-day">
+          <select class="form-control" name="sample_day" id="sample-day">
             <option selected>Select option</option>
             <option value='0'>Day 1</option>
             <option value='1'>Day 5 - 7</option>
@@ -268,12 +268,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="collection-date">Collection date</label>
-          <input required type="date" class="form-control" name="collection-date" id="collection-date" placeholder="Quarantine Power">
+          <input required type="date" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
         </div>
 
         <div class="form-group col-md-12">
           <label for="date-to-lab">Date sent to laboratory</label>
-          <input required type="date" class="form-control" name="date-to-lab" id="date-to-lab" placeholder="Quarantine Power">
+          <input required type="date" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
         </div>
 
         <div class="form-group col-md-12">
@@ -294,7 +294,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-condition">Patient current condition</label>
-          <select class="form-control" name="patient-condition" id="patient-condition">
+          <select class="form-control" name="patient_condition" id="patient-condition">
             <option selected>Select option</option>
             <option value='0'>Home</option>
             <option value='1'>Hospital</option>
@@ -306,7 +306,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="clinical-picture">Clinical picture</label>
-          <select class="form-control" name="clinical-picture" id="clinical-picture">
+          <select class="form-control" name="clinical_picture" id="clinical-picture">
             <option selected>Select option</option>
             <option value='0'>Asymptomatic</option>
             <option value='1'>URTI</option>
@@ -325,8 +325,8 @@ if (isset($_GET['user'])) {
         </div>
 
         <div class="form-group col-md-12">
-          <label for="recent-travel">Sampling day</label>
-          <select class="form-control" name="recent-travel" id="recent-travel">
+          <label for="recent-travel">Recent travel</label>
+          <select class="form-control" name="recent_travel" id="recent-travel">
             <option selected>Select option</option>
             <option value='0'>Local</option>
             <option value='1'>Internal</option>
@@ -336,12 +336,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-arrival-date">Patient arrival date</label>
-          <input required type="date" class="form-control" name="patient-arrival-date" id="patient-arrival-date" placeholder="">
+          <input required type="date" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
           <label for="contact-with-cases">Contact with cases</label>
-          <select class="form-control" name="contact-with-cases" id="contact-with-cases">
+          <select class="form-control" name="contact_with_cases" id="contact-with-cases">
             <option selected>Select option</option>
             <option value='0'>Yes</option>
             <option value='1'>No</option>
@@ -363,10 +363,9 @@ if (isset($_GET['user'])) {
         </div>
 
         <div class="form-group col-md-12">
-          <label for="additional-comments">Owner Name</label>
-          <textarea class="form-control" name="additional-comments" id="additional-comments">
+          <label for="additional-comments">Additional comments</label>
+          <textarea class="form-control" name="additional_comments" id="additional-comments">
           </textarea>
-
         </div>
 
 
@@ -381,12 +380,30 @@ if (isset($_GET['user'])) {
         </div>
 
         <div class="form-group col-md-12">
-          <label for="date">Date</label>
-          <input type="date" class="form-control" name="date" id="date" placeholder="">
+          <label for="date">Created at</label>
+          <input type="date" class="form-control" name="created_at" id="date" placeholder="">
         </div>
 
+        <?php
+
+        if (isset($success)) {
+          if ($success) {
+            echo "<div class='alert alert-success' role='alert'>
+                            Task Sent Successfully .
+                                </div>";
+          } else {
+            echo "<div class='alert alert-danger' role='alert'>
+                            Failed To Send Task .
+                                </div>";
+          }
+        }
+
+
+
+        ?>
+
         <div class="col-md-12">
-          <button type="submit" class="btn btn-primary col-md-12">Save Case</button>
+          <button type="submit" class="btn btn-primary col-md-12">Save lab result</button>
         </div>
       </form>
 
@@ -418,48 +435,12 @@ if (isset($_GET['user'])) {
 
 
   <script>
-    function getlocality() {
-      var loc = document.getElementById('locality');
-      var st = document.getElementById('state_');
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var myObj = JSON.parse(this.responseText);
-          var html_data = '';
-
-          for (var i = 0; i < myObj['localitis'].length; i++) {
-            var newobj = myObj['localitis'][i];
-            var code = newobj['CODE'];
-            var name = newobj['name'];
-
-            html_data += '<option value="' + code + '">' + name + '</option>';
-          };
-          loc.innerHTML = html_data;
-
-        }
-      };
-      xmlhttp.open("GET", "../get_locality.php?id=" + st.options[st.selectedIndex].value, true);
-      xmlhttp.send();
-
+    function fillform() {
+      id = document.getElementById("additional-comments")
+      if (id.value == "") {
+        id.value = ""
+      }
     }
-
-
-
-    var q = '';
-    document.getElementById("new_hc").classList.add("active");
-    var marker1 = new ol.style.Icon({
-      anchor: [0.5, 1],
-      src: '../images/on.png'
-    });
-    var stage = new ol.style.Icon({
-      anchor: [0.5, 1],
-      src: '../images/stage.png'
-    });
-    var marker2 = new ol.style.Icon({
-      anchor: [0.5, 1],
-      src: '../images/off.png'
-    });
-
 
     var style = new ol.style.Style({
       image: new ol.style.Icon({
