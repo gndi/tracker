@@ -342,7 +342,7 @@ if (isset($_GET['user'])) {
         </div>
 
         <div class="form-group col-md-12">
-          <label for="clinical-picture">Clinical picture</label>
+          <label for="clinical-picture">Clinical picture (Hold on CTRL for multiple selection)</label>
           <select class="form-control" name="clinical_picture[]" id="clinical-picture" multiple>
             <option selected>Select option</option>
             <option value='0'>Asymptomatic</option>
@@ -387,7 +387,7 @@ if (isset($_GET['user'])) {
         </div>
 
         <div class="form-group col-md-12">
-          <label for="comorobidities">Underlying comorobidities</label>
+          <label for="comorobidities">Underlying comorobidities (Hold on CTRL for multiple selection)</label>
           <select class="form-control" name="comorobidities[]" id="comorobidities" multiple>
             <option selected>Select option</option>
             <option value='0'>DM</option>
