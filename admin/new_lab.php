@@ -208,12 +208,12 @@ if (isset($_GET['user'])) {
       <form method="post" accept-charset="utf-8">
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Name (hosptial, lab, or other)</label>
-          <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
+          <input required type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="patient-name">Patient name</label>
-          <input type="text" class="form-control" name="patient_name" id="patient-name" placeholder="Patient Name">
+          <input required type="text" class="form-control" name="patient_name" id="patient-name" placeholder="Patient Name">
         </div>
 
         <div class="form-group col-md-12">
@@ -227,22 +227,22 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-age">Age</label>
-          <input type="number" class="form-control" name="patient_age" id="patient-age" placeholder="Patient age">
+          <input required type="number" class="form-control" name="patient_age" id="patient-age" placeholder="Patient age">
         </div>
 
         <div class="form-group col-md-12">
           <label for="ethnicity">Ethnicity</label>
-          <input type="number" class="form-control" name="ethnicity" id="ethnicity" placeholder="Patient ethnicity (free text)">
+          <input required type="number" class="form-control" name="ethnicity" id="ethnicity" placeholder="Patient ethnicity (free text)">
         </div>
 
         <div class="form-group col-md-12">
           <label for="phone-number">Phone number</label>
-          <input type="text" class="form-control" name="phone_number" id="phone-number" placeholder="Phone number">
+          <input required type="text" class="form-control" name="phone_number" id="phone-number" placeholder="Phone number">
         </div>
 
         <div class="form-group col-md-12">
           <label for="patient-address">Patient address</label>
-          <input type="text" class="form-control" name="patient_address" id="patient-address" placeholder="Patient address">
+          <input required type="text" class="form-control" name="patient_address" id="patient-address" placeholder="Patient address">
         </div>
 
 
@@ -257,12 +257,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="physician-name">Physician name</label>
-          <input type="text" class="form-control" name="physician_name" id="physician-name" placeholder="Physician name">
+          <input required type="text" class="form-control" name="physician_name" id="physician-name" placeholder="Physician name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="physician-mobile">Physician mobile</label>
-          <input type="text" class="form-control" name="physician_mobile" id="physician-mobile" placeholder="Physician mobile">
+          <input required type="text" class="form-control" name="physician_mobile" id="physician-mobile" placeholder="Physician mobile">
         </div>
         <hr>
 
@@ -305,12 +305,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="collection-date">Collection date</label>
-          <input type="date" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
+          <input required type="date" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
         </div>
 
         <div class="form-group col-md-12">
           <label for="date-to-lab">Date sent to laboratory</label>
-          <input type="date" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
+          <input required type="date" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
         </div>
 
         <div class="form-group col-md-12">
@@ -373,7 +373,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-arrival-date">Patient arrival date</label>
-          <input type="date" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
+          <input required type="date" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
@@ -408,17 +408,17 @@ if (isset($_GET['user'])) {
 
         <!-- <div class="form-group col-md-12">
           <label for="reference_number">Reference number</label>
-          <input type="text" class="form-control" name="reference_number" id="reference_number" placeholder="">
+          <input required type="text" class="form-control" name="reference_number" id="reference_number" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
           <label for="result">Result</label>
-          <input type="text" class="form-control" name="result" id="result" placeholder="">
+          <input required type="text" class="form-control" name="result" id="result" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
           <label for="date">Created at</label>
-          <input type="date" class="form-control" name="created_at" id="date" placeholder="">
+          <input required type="date" class="form-control" name="created_at" id="date" placeholder="">
         </div> -->
 
         <?php
