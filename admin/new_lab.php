@@ -90,12 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $values = implode(',', $valuearr);
   $lab_id =
   $in = join(',', array_fill(0, count($values), '?'));
-  $sql = "insert into clinical_picture (`asymptomatic`,`urti`,`pneumonina`,`fever` ,`cough`,`sob`,`treatment`,`supportive`,`compassionate`,`clinical_trial`,`no_treatment`,`other`) values ($values)";
+  $sql = "insert into clinical_picture (`lab_id`, `asymptomatic`,`urti`,`pneumonina`,`fever` ,`cough`,`sob`,`treatment`,`supportive`,`compassionate`,`clinical_trial`,`no_treatment`,`other`) values ($count, $values)";
 
   $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
 
   // comorobidities
-  $sql = "insert into comorobidities(`lab_id`, `dm`, `htn`, `asthma`, `cardiac`, `renal`, `other`) values(10, $comVal)";
+  $sql = "insert into comorobidities(`lab_id`, `dm`, `htn`, `asthma`, `cardiac`, `renal`, `other`) values($count, $comVal)";
   $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
   
   if ($res) {
