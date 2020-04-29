@@ -64,9 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $collection_date = date("Y-m-d H:i:s", strtotime(htmlspecialchars(mysqli_real_escape_string($db, $_POST['collection_date']))));
   $accordance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['accordance']));
   $patient_condition = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_condition']));
-  $clinical_picture = htmlspecialchars(mysqli_real_escape_string($db, $_POST['clinical_picture']));
   $recent_travel = htmlspecialchars(mysqli_real_escape_string($db, $_POST['recent_travel']));
-  $comorobidities = htmlspecialchars(mysqli_real_escape_string($db, $_POST['comorobidities']));
   // leave this for other form
   /*$reference_number = htmlspecialchars(mysqli_real_escape_string($db, $_POST['reference_number']));
   $result = htmlspecialchars(mysqli_real_escape_string($db, $_POST['result']));
@@ -77,16 +75,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   mysqli_query($db, 'SET CHARACTER SET utf8');
 
   $sql = "INSERT INTO `labs` (`name`,`patient_name`,`gender`,`patient_age`,`ethnicity`,`phone_number`,`patient_address`,`case_type`,`physician_name`,`physician_mobile`,`sample_type`,`test_reason`,`sample_day`,`collection_date`,`accordance`,`patient_condition`,`clinical_picture`,`recent_travel`,`comorobidities`,`additional_comments`, `to_lab`, `patient_arrival_date`, `contact_with_case`) VALUES ('$name','$patient_name','$gender','$patient_age','$ethnicity','$phone_number','$patient_address','$case_type','$physician_name','$physician_mobile','$sample_type','$test_reason','$sample_day','$collection_date','$accordance','$patient_condition','$clinical_picture','$recent_travel','$comorobidities','$additional_comments','$to_lab', '$arrival_date', '$with_cases')";
+  $res = mysqli_query($db, $sql);
+  $count = mysqli_num_rows($res);
+  
+  // insert into clinical picture
 
+  $clinical_picture = $_POST['clinical_picture'];
+  $comorobidities = $_POST['comorobidities'];
 
-  // $result = mysqli_query($conn, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($conn), E_USER_ERROR);
+  $com = createArray(6, $comorobidities);
+  $comVal = implode(',', $com);
+
+  $valuearr = createArray(12, $clinical_picture);
+  $values = implode(',', $valuearr);
+  $lab_id =
+  $in = join(',', array_fill(0, count($values), '?'));
+  $sql = "insert into clinical_picture (`asymptomatic`,`urti`,`pneumonina`,`fever` ,`cough`,`sob`,`treatment`,`supportive`,`compassionate`,`clinical_trial`,`no_treatment`,`other`) values ($values)";
+
   $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
+
+  // comorobidities
+  $sql = "insert into comorobidities(`lab_id`, `dm`, `htn`, `asthma`, `cardiac`, `renal`, `other`) values(10, $comVal)";
+  $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
+  
   if ($res) {
     $success = true;
+    $num_rows = mysqli_num_rows($res);
+
   } else {
     $success = false;
   }
+
+  // append to the other tables
+  
 };
+
+function arrayString($array) {
+  return join(',', $array);
+}
+
+function createArray($length, $members) {
+  $res = array_fill(0, $length, 0);
+  for ($i = 0; $i <= $length; $i++){
+    if ( in_array($i, $members)){
+      $res[$i] = 1;
+    }
+  }
+  return $res;
+}
+
 
 $long = '';
 $latg = '';
@@ -171,12 +208,12 @@ if (isset($_GET['user'])) {
       <form method="post" accept-charset="utf-8">
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Name (hosptial, lab, or other)</label>
-          <input required type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
+          <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="patient-name">Patient name</label>
-          <input required type="text" class="form-control" name="patient_name" id="patient-name" placeholder="Patient Name">
+          <input type="text" class="form-control" name="patient_name" id="patient-name" placeholder="Patient Name">
         </div>
 
         <div class="form-group col-md-12">
@@ -190,22 +227,22 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-age">Age</label>
-          <input required type="number" class="form-control" name="patient_age" id="patient-age" placeholder="Patient age">
+          <input type="number" class="form-control" name="patient_age" id="patient-age" placeholder="Patient age">
         </div>
 
         <div class="form-group col-md-12">
           <label for="ethnicity">Ethnicity</label>
-          <input required type="number" class="form-control" name="ethnicity" id="ethnicity" placeholder="Patient ethnicity (free text)">
+          <input type="number" class="form-control" name="ethnicity" id="ethnicity" placeholder="Patient ethnicity (free text)">
         </div>
 
         <div class="form-group col-md-12">
           <label for="phone-number">Phone number</label>
-          <input required type="text" class="form-control" name="phone_number" id="phone-number" placeholder="Phone number">
+          <input type="text" class="form-control" name="phone_number" id="phone-number" placeholder="Phone number">
         </div>
 
         <div class="form-group col-md-12">
           <label for="patient-address">Patient address</label>
-          <input required type="text" class="form-control" name="patient_address" id="patient-address" placeholder="Patient address">
+          <input type="text" class="form-control" name="patient_address" id="patient-address" placeholder="Patient address">
         </div>
 
 
@@ -220,12 +257,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="physician-name">Physician name</label>
-          <input required type="text" class="form-control" name="physician_name" id="physician-name" placeholder="Physician name">
+          <input type="text" class="form-control" name="physician_name" id="physician-name" placeholder="Physician name">
         </div>
 
         <div class="form-group col-md-12">
           <label for="physician-mobile">Physician mobile</label>
-          <input required type="text" class="form-control" name="physician_mobile" id="physician-mobile" placeholder="Physician mobile">
+          <input type="text" class="form-control" name="physician_mobile" id="physician-mobile" placeholder="Physician mobile">
         </div>
         <hr>
 
@@ -268,12 +305,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="collection-date">Collection date</label>
-          <input required type="date" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
+          <input type="date" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
         </div>
 
         <div class="form-group col-md-12">
           <label for="date-to-lab">Date sent to laboratory</label>
-          <input required type="date" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
+          <input type="date" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
         </div>
 
         <div class="form-group col-md-12">
@@ -306,7 +343,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="clinical-picture">Clinical picture</label>
-          <select class="form-control" name="clinical_picture" id="clinical-picture">
+          <select class="form-control" name="clinical_picture[]" id="clinical-picture" multiple>
             <option selected>Select option</option>
             <option value='0'>Asymptomatic</option>
             <option value='1'>URTI</option>
@@ -336,7 +373,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-arrival-date">Patient arrival date</label>
-          <input required type="date" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
+          <input type="date" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
@@ -351,7 +388,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="comorobidities">Underlying comorobidities</label>
-          <select class="form-control" name="comorobidities" id="comorobidities">
+          <select class="form-control" name="comorobidities[]" id="comorobidities" multiple>
             <option selected>Select option</option>
             <option value='0'>DM</option>
             <option value='1'>HTN</option>
@@ -369,20 +406,20 @@ if (isset($_GET['user'])) {
         </div>
 
 
-        <div class="form-group col-md-12">
+        <!-- <div class="form-group col-md-12">
           <label for="reference_number">Reference number</label>
-          <input required type="text" class="form-control" name="reference_number" id="reference_number" placeholder="">
+          <input type="text" class="form-control" name="reference_number" id="reference_number" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
           <label for="result">Result</label>
-          <input required type="text" class="form-control" name="result" id="result" placeholder="">
+          <input type="text" class="form-control" name="result" id="result" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
           <label for="date">Created at</label>
           <input type="date" class="form-control" name="created_at" id="date" placeholder="">
-        </div>
+        </div> -->
 
         <?php
 

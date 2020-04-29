@@ -31,3 +31,29 @@ created_at datetime
 alter table hc add icu integer;
 alter table hc add available_beds integer;
 -- 2 is for medical staff
+
+create table comorobidities (
+    lab_id integer,
+    dm bool,
+    htn bool,
+    asthma bool,
+    cardiac bool,
+    renal bool,
+    other bool
+);
+
+create table clinical_picture (
+    lab_id int,
+    asymptomatic bool,
+    urti bool,
+    pneumonina bool,
+    fever bool,
+    cough bool,
+    sob bool,
+    treatment bool,
+    supportive bool,
+    compassionate bool,
+    clinical_trial bool,
+    no_treatment bool,
+    other bool
+);
