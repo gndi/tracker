@@ -43,6 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lat = htmlspecialchars(mysqli_real_escape_string($db, $_POST['lat']));
   $adress = htmlspecialchars(mysqli_real_escape_string($db, $_POST['adress']));
   $power = htmlspecialchars(mysqli_real_escape_string($db, $_POST['power']));
+  $icu = htmlspecialchars(mysqli_real_escape_string($db, $_POST['icu']));
+  $available_beds = htmlspecialchars(mysqli_real_escape_string($db, $_POST['available_beds']));
+
   $phone = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone']));
   $phone2 = htmlspecialchars(mysqli_real_escape_string($db, $_POST['phone2']));
   $state = 0;
@@ -75,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
     //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
-    $sql = "INSERT INTO `hc` ( `name`, `info`, `power`, `phone`, `phone2`, `lon`, `lat`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', '$phone2', $lon, $lat, '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
+    $sql = "INSERT INTO `hc` ( `name`, `info`, `power`, `icu`, `available_beds`, `phone`, `phone2`, `lon`, `lat`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', , '$icu', '$available_beds', '$phone2', $lon, $lat, '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
 
 
     $res = mysqli_query($db, $sql);
@@ -175,11 +178,23 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Quarantine Address</label>
-          <input required type="text" class="form-control" name="adress" id="exampleFormControlInput1" placeholder="Quarantine Adress">
+          <input required type="text" class="form-control" name="adress" id="exampleFormControlInput1" placeholder="Quarantine Address">
         </div>
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Total capacity (beds)</label>
           <input required type="number" class="form-control" name="power" id="exampleFormControlInput1" placeholder="Quarantine Power">
+        </div>
+
+        <!-- Available capacity -->
+        <div class="form-group col-md-12">
+          <label for="exampleFormControlInput1">Available beds</label>
+          <input required type="number" class="form-control" name="available_beds" id="exampleFormControlInput1" placeholder="Available beds in this site">
+        </div>
+
+        <!-- ICU beds -->
+        <div class="form-group col-md-12">
+          <label for="exampleFormControlInput1">ICU beds</label>
+          <input required type="number" class="form-control" name="icu" id="exampleFormControlInput1" placeholder="Available ICU beds">
         </div>
         <div class="form-group col-md-12">
           <label for="owner_name">Owner Name</label>
@@ -247,8 +262,10 @@ if (isset($_GET['user'])) {
             <div class="form-group col-md-6">
               <label for="medical_usage">Medical Usage </label>
               <select class="form-control" name="medical_usage" id="medical_usage">
+                <option  selected>Select usage</option>
                 <option value='0' selected>Isolation</option>
                 <option value='1'>Self isolation </option>
+                <option value='2'>Medical staff</option>
 
               </select>
             </div>

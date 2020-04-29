@@ -24,3 +24,10 @@ reference_number varchar(50),
 result varchar(100),
 created_at datetime
 )
+
+
+-- add columns
+
+alter table hc add icu integer;
+alter table hc add available_beds integer;
+-- 2 is for medical staff

@@ -38,10 +38,10 @@
         <?php
         if ($login_permission == 1 or $login_permission == 0) {
           echo '<li id="new_hc" class="nav-item ">
-        <a class="nav-link" href="new_hc.php"><img src="../images/add.png" width="25px" height="25px" />Add Quarantine <span class="sr-only"></span></a>
+        <a class="nav-link" href="new_hc.php"><img src="../images/add.png" width="25px" height="25px" />Add Facility <span class="sr-only"></span></a>
       </li>
        <li id="hc_list" class="nav-item ">
-        <a class="nav-link" href="hc_list.php"><img src="../images/hospital.png" width="25px" height="25px" />Quarantines <span class="sr-only"></span></a>
+        <a class="nav-link" href="hc_list.php"><img src="../images/hospital.png" width="25px" height="25px" />Facilities <span class="sr-only"></span></a>
       </li>';
         }
         if ($login_permission == 1 or $login_permission == 4 or $login_permission == 0) {
