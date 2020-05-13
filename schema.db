@@ -57,3 +57,8 @@ create table clinical_picture (
     no_treatment bool,
     other bool
 );
+
+
+ alter table cases drop bring_by;
+
+ alter table users add locality_id integer default 0;

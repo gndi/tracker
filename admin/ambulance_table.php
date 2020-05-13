@@ -61,7 +61,7 @@ while($row = mysqli_fetch_assoc($result)) {
           $phone = $row['phone'];
            $phone2 = $row['phone2'];
            $type = $row['type'];
-           $bring_by = getmanager_name($db,$row['bring_by']);
+          //  $bring_by = getmanager_name($db,$row['bring_by']);
          if($state==-1){
           $icon='ambulans.png';
 
@@ -102,7 +102,6 @@ $h1 ="<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdo
     <td>$adress</td>
     <td>$phone</td>
     <td>$phone2</td>
-    <td>$bring_by</td>
     
     <td><a href='#' onclick= \" map.setView(new ol.View({ center: ol.proj.fromLonLat([$lon,$lat], 'EPSG:3857'), zoom: 15 })); \" > <img src='../images/$icon' width='20px' height='20px' /></a> <a href='http://maps.google.com/maps?daddr=$lat,$lon'><img src='../images/on.png' width='20px' height='20px' /> </a> $h1 </td>
     </tr>";
