@@ -37,15 +37,18 @@
     $about = mysqli_escape_string($db, $_POST['about']);
     $phone = mysqli_escape_string($db, $_POST['phone']);
     $permission = mysqli_escape_string($db, $_POST['permission']);
+    $location_id = mysqli_escape_string($db, $_POST['location_id']);
 
 
     $profile = "profiles/profile.jpg";
 
-    $q = "INSERT INTO users (username, name,password,permission,session,online,about,phone)
-SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$phone' FROM DUAL WHERE NOT EXISTS (
+    $q = "INSERT INTO users (username, name,password,permission,session,online,about,phone, locality_id)
+SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$phone', '$location_id' FROM DUAL WHERE NOT EXISTS (
     SELECT username FROM users WHERE username = '$username'
 ) ;";
-    $res = mysqli_query($db, $q);
+
+    // $q = "insert into users(username, name,password,permission,about,phone, locality_id, online) values ('$username', '$name', '$password', '$permission', '$about', '$phone', '$location_id', 0)";
+    $res = mysqli_query($db, $q) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
 
     if ($res) {
 
@@ -121,7 +124,7 @@ SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$pho
             <input type="text" name='phone' class="form-control" id="lastname" placeholder="Phone">
           </div>
           <div class="form-group col-md-6">
-            <label for="permission">Case Type</label>
+            <label for="permission">User Type</label>
             <select class="form-control" name="permission" id="permission">
               <option value='0' selected>Admin</option>
               <option value='1'>Qurantine</option>
@@ -130,6 +133,22 @@ SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$pho
               <option value='4'>Project Manager</option>
               <option value='5'>Team Member</option>
               <option value='10'>Labs</option>
+              <option value='6'>Locality administrator</option>
+            </select>
+          </div>
+
+          <!-- Localities -->
+          <div class="form-group col-md-6">
+            <label for="location_id">Case Type</label>
+            <select class="form-control" name="location_id" id="location_id">
+              <option value='0' selected>Select a city</option>
+              <option value='1'>Khartoum</option>
+              <option value='2'>Bahri</option>
+              <option value='3'>Jebel Awalia</option>
+              <option value='4'>Karrari</option>
+              <option value='5'>Sharg Elneel</option>
+              <option value='6'>Umbadda</option>
+              <option value='7'>Um Durman</option>
             </select>
           </div>
 

@@ -62,7 +62,7 @@
         //echo '<li id="new_case" class="nav-item ">
         //=======
         //        }
-        if ($login_permission == 2 or $login_permission == 0) {
+        if ($login_permission == 2 or $login_permission == 0 ) {
           echo '<li id="new_case" class="nav-item ">
 
         <a class="nav-link" href="new_case.php"><img src="../images/case.png" width="32px" height="32px" />Add Case <span class="sr-only"></span></a>
@@ -74,6 +74,21 @@
         <a class="nav-link" href="not_list.php"><img src="../images/users.png" width="32px" height="32px" />Notifications <span class="sr-only"></span></a>
       </li>';
         }
+
+// locality menus 
+if ($login_permission == 6) {
+  echo '<li id="new_case" class="nav-item ">
+
+        <a class="nav-link" href="new_case.php"><img src="../images/case.png" width="32px" height="32px" />Add Case <span class="sr-only"></span></a>
+      </li>
+      <li id="cases_list" class="nav-item ">
+        <a class="nav-link" href="locality_cases.php"><img src="../images/cases.png" width="32px" height="32px" />Cases <span class="sr-only"></span></a>
+      </li>
+      <li id="not_list" class="nav-item ">
+        <a class="nav-link" href="not_list.php"><img src="../images/users.png" width="32px" height="32px" />Notifications <span class="sr-only"></span></a>
+      </li>';
+}
+
         if ($login_permission == 3 or $login_permission == 0) {
           echo '
       <li id="cases_list" class="nav-item ">

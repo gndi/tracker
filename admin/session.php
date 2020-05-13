@@ -15,6 +15,7 @@ if(isset($_COOKIE['cookie'])){
    $login_session = $row['username'];
    $login_permission =$row['permission'];
    $user_id = $row['id'];
+   $user_locality = $row["locality_id"];
    $q_id = $row['q_id'];
    if(!isset($_COOKIE['cookie'])){
       header("location:./login.php");
