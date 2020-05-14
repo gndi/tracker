@@ -62,3 +62,5 @@ create table clinical_picture (
  alter table cases drop bring_by;
 
  alter table users add locality_id integer default 0;
+
+ alter table notifications alter p3 set default 0;
