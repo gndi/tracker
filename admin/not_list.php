@@ -216,7 +216,7 @@ if ($login_permission == 2 or $login_permission == 6 or $login_permission == 0) 
       var permission = <?php echo $login_permission ?>;
       var user_locality = <?php echo $user_locality ?>;
 
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/monitortable.php?cookie=' + cookie + '&q=' + q + "&user_type=" + "&user_locality="+user_locality, permission, true);
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/monitortable.php?cookie=' + cookie + '&q=' + q + "&user_type=" + permission + "&user_locality=" + user_locality, true);
       xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return;
         if (this.status !== 200) return; // or whatever error handling you want
