@@ -134,6 +134,7 @@ SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$pho
               <option value='5'>Team Member</option>
               <option value='10'>Labs</option>
               <option value='6'>Locality administrator</option>
+              <option value='7'>Call center admin</option>
             </select>
           </div>
 
