@@ -4,7 +4,7 @@ include('./session.php');
 include('./header.php');
 //include('./includes/setting.php');
 
-if($login_permission==2 or $login_permission==0){
+if($login_permission==2 or $login_permission == 6 or $login_permission==0){
 }else{
   header("location:./index.php");
 }
