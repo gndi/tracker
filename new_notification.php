@@ -39,14 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $state_ = htmlspecialchars(mysqli_real_escape_string($db, $_POST['state_']));
   $locality = htmlspecialchars(mysqli_real_escape_string($db, $_POST['locality']));
 
-
+  error_log($locality);
 
   if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($hc_name) and isset($phone) and isset($phone2) and isset($type) and isset($state) and isset($adress) and isset($nat_id)) {
 
     mysqli_query($db, "SET NAMES 'utf8'");
 
     //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
-    $sql = "INSERT INTO `notifications` ( `name`, `datetime`, `info`, `adress`, `hc_name`, `hc_id`, `state`, `lon`, `lat`, `type`, `phone`, `phone2`,`nat_id`,`p1`,`p2`, `p4`, `p5`, `p6`, `p7`, `p8`, `p9`, `p10`,`child`,`state_`,`locality`) VALUES ( '$name', now(), '$info', '$adress', '$hc_name', 1, $state, $lon, $lat, $type, '$phone', '$phone2','$nat_id',$p1,$p2,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$child,'$state_','locality')";
+    $sql = "INSERT INTO `notifications` ( `name`, `datetime`, `info`, `adress`, `hc_name`, `hc_id`, `state`, `lon`, `lat`, `type`, `phone`, `phone2`,`nat_id`,`p1`,`p2`, `p4`, `p5`, `p6`, `p7`, `p8`, `p9`, `p10`,`child`,`state_`,`locality`) VALUES ( '$name', now(), '$info', '$adress', '$hc_name', 1, $state, $lon, $lat, $type, '$phone', '$phone2','$nat_id',$p1,$p2,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$child,'$state_','$locality')";
 
     $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
     if ($res) {
@@ -56,10 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   };
 }
-
-
-
-
 
 
 ?>
@@ -191,11 +187,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = mysqli_query($db, $q);
                 while ($row = mysqli_fetch_assoc($result)) {
                   $hc_n = $row['admin2Name_en'];
-                  $hc_id = $row['admin2Pcode'];
+                  $locality = $row['admin2Pcode'];
                   if ($c == 1) {
-                    echo "<option value='" . $hc_id . "'  selected>" . $hc_n . "</option>";
+                    echo "<option value='" . $locality . "'  selected>" . $hc_n . "</option>";
                   } else {
-                    echo "<option value='" . $hc_id . "' >" . $hc_n . "</option>";
+                    echo "<option value='" . $locality . "' >" . $hc_n . "</option>";
                   }
                   $c += 1;
                 }
@@ -206,14 +202,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
 
         <div class="form-group col-md-12">
           <h4>Complete this Data Carfully إملأ هذه البيانات بحذر</h4> <br />
