@@ -1,14 +1,25 @@
 <?php
-include '../config.php';
+include './config.php';
+include './session.php';
+
+if ($login_permission == 0 or $login_permission == 6) {
+
+}else {
+    header("location:./index.php");
+
+}
 
 $service = $_GET["service"];
 // make sure if $service doesn't not work to fallback...
 $q = "select * from `$service` order by id";
 
+
+error_log($q);
+
 $d = mktime(11, 14, 54, 8, 12, 2014);
 $filename = date('Y-m-d-His') . '.csv';
 $headers = array();
-$res = mysqli_query($db, $q);
+$res = mysqli_query($db, $q) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);;
 
 while ($fieldinfo = mysqli_fetch_field($res)) {
     $headers[] = $fieldinfo->name;
