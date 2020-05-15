@@ -24,10 +24,12 @@
 
   
     if ($permission == 6) {
-      $locality_id = $_GET["locality_id"];
+      $locality_id = $_GET["user_locality"];
       // $locality = 
       $cities = array(1 => "SD01001", 2 => "SD01002", 3 => "SD01003", 4 => "SD01004", 5 => "SD01005", 6 => "SD01006", 7 => "SD01007");
       $locality = $cities[$locality_id] ?? "*";
+      error_log($locality);
+
       $q = "SELECT * FROM `notifications` WHERE locality = '$locality' order by id ";
     } else {
       $q = "SELECT * FROM `notifications` order by id ";
