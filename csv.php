@@ -6,8 +6,7 @@ error_log($login_permission);
 if ($login_permission == 0 or $login_permission == 6) {
 
 }else {
-    header("location:./index.php");
-
+    header("location:./");
 }
 
 $service = $_GET["service"];
