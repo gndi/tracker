@@ -79,7 +79,16 @@ SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$pho
   }
 
 
+/*
+  <option value='SD01003'  selected>Bahri</option>
+  <option value='SD01001' >Jebel Awlia</option>
+  <option value='SD01005' >Karrari</option>
+  <option value='SD01007' >Khartoum</option>
+  <option value='SD01004' >Sharg An Neel</option>
+  <option value='SD01002' >Um Bada</option>
+  <option value='SD01006' >Um Durman</option>
 
+*/
 
 
 
@@ -138,18 +147,21 @@ SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$pho
             </select>
           </div>
 
+        
+      
           <!-- Localities -->
           <div class="form-group col-md-6">
-            <label for="location_id">Case Type</label>
+            <label for="location_id">User locality (important for locality admin)</label>
             <select class="form-control" name="location_id" id="location_id">
+            
               <option value='0' selected>Select a city</option>
-              <option value='1'>Khartoum</option>
-              <option value='2'>Bahri</option>
-              <option value='3'>Jebel Awalia</option>
-              <option value='4'>Karrari</option>
-              <option value='5'>Sharg Elneel</option>
-              <option value='6'>Umbadda</option>
-              <option value='7'>Um Durman</option>
+              <option value='7'>Khartoum</option>
+              <option value='3'>Bahri</option>
+              <option value='1'>Jebel Awalia</option>
+              <option value='5'>Karrari</option>
+              <option value='4'>Sharg Elneel</option>
+              <option value='2'>Umbadda</option>
+              <option value='6'>Um Durman</option>
             </select>
           </div>
 

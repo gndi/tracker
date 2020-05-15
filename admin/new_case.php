@@ -130,7 +130,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Case Address</label>
-          <input type="text" class="form-control" name="adress" id="exampleFormControlInput1" placeholder="Case Adress">
+          <input type="text" class="form-control" name="adress" id="exampleFormControlInput1" placeholder="Case Address">
         </div>
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Health Center</label>
@@ -290,15 +290,9 @@ if (isset($_GET['user'])) {
           <button type="submit" class="btn btn-primary col-md-12">Save Case</button>
         </div>
       </form>
-
-
-
-
     </div>
 
   </div>
-
-
 
 
   <div class="col-sm-6">

@@ -26,6 +26,10 @@
     if ($permission == 6) {
       $locality_id = $_GET["user_locality"];
       // $locality = 
+      /*
+        <option value='SD01003'  selected>Bahri</option><option value='SD01001' >Jebel Awlia</option><option value='SD01005' >Karrari</option><option value='SD01007' >Khartoum</option><option value='SD01004' >Sharg An Neel</option><option value='SD01002' >Um Bada</option><option value='SD01006' >Um Durman</option>
+
+      */
       $cities = array(1 => "SD01001", 2 => "SD01002", 3 => "SD01003", 4 => "SD01004", 5 => "SD01005", 6 => "SD01006", 7 => "SD01007");
       $locality = $cities[$locality_id] ?? "*";
       error_log($locality);
