@@ -1,6 +1,7 @@
 <?php
 include './config.php';
-include './session.php';
+include './admin/session.php';
+error_log($login_permission);
 
 if ($login_permission == 0 or $login_permission == 6) {
 
@@ -10,8 +11,17 @@ if ($login_permission == 0 or $login_permission == 6) {
 }
 
 $service = $_GET["service"];
-// make sure if $service doesn't not work to fallback...
 $q = "select * from `$service` order by id";
+
+if ($login_permission == 6) {
+    if (isset($user_locality)) {
+        $cities = array(1 => "SD01001", 2 => "SD01002", 3 => "SD01003", 4 => "SD01004", 5 => "SD01005", 6 => "SD01006", 7 => "SD01007");
+        $locality = $cities[$user_locality] ?? "*";
+        error_log($locality);
+        $q = "select * from `$service` where locality = '$locality' order by id ";
+    }
+}
+// make sure if $service doesn't not work to fallback...
 
 
 error_log($q);
