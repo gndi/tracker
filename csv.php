@@ -9,6 +9,7 @@ if ($login_permission == 0 or $login_permission == 6) {
     header("location:./");
 }
 
+mysqli_query($db, "set names utf8");
 $service = $_GET["service"];
 $q = "select * from `$service` order by id";
 
@@ -21,8 +22,6 @@ if ($login_permission == 6) {
     }
 }
 // make sure if $service doesn't not work to fallback...
-
-
 error_log($q);
 
 $d = mktime(11, 14, 54, 8, 12, 2014);
@@ -35,6 +34,7 @@ while ($fieldinfo = mysqli_fetch_field($res)) {
 }
 
 $fp = fopen('php://output', 'w');
+fwrite($fp, pack("CCC", 0xef, 0xbb, 0xbf)); // add utf support, very hacky but it should do it
 fputcsv($fp, $headers);
 
 while ($row = mysqli_fetch_assoc($res)) {
