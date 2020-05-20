@@ -321,10 +321,10 @@ if (isset($_GET['user'])) {
             <div class="form-group col-md-6">
               <label for="building_type">Building type</label>
               <select class="form-control" name="building_type" id="building_type">
-                <option value='0' selected>Hospital </option>
-                <option value='1'>Stadium</option>
-                <option value='2'>School Complex</option>
-                <option value='3'>Others</option>
+                <option selected>Select value</option>
+                <option value='0'>Primary</option>
+                <option value='1'>Seconday</option>
+                <option value='2'>Others</option>
 
               </select>
             </div>

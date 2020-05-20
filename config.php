@@ -7,5 +7,7 @@
    $sitelink = "http://127.0.0.1:8004/";
    $salt='Hellocovid';
    $sitename="Covid-19 Managment - Sudan";
+
+   // define()
 ?>
     

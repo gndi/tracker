@@ -76,9 +76,9 @@
     function getbt($code)
     {
       if ($code == 0) {
-        return 'Hospital';
+        return 'Primary';
       } elseif ($code == 1) {
-        return 'Stadium';
+        return 'Secondary';
       } elseif ($code == 2) {
         return 'School Complex';
       } elseif ($code == 3) {
