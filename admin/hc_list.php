@@ -154,7 +154,7 @@ if ($login_permission == 1 or $login_permission == 0) {
           <select class="form-control" name="building_type" id="building_type" onchange='userslist();'>
           <option selected>Select value</option>
                 <option value='0'>Primary</option>
-                <option value='1'>Seconday</option>
+                <option value='1'>Secondary</option>
                 <option value='2'>Others</option>
 
           </select>
