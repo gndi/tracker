@@ -152,11 +152,10 @@ if ($login_permission == 1 or $login_permission == 0) {
         <!-- Search by building type -->
         <div class="form-group col-auto">
           <select class="form-control" name="building_type" id="building_type" onchange='userslist();'>
-            <option value='' selected>Building type</option>
-            <option value="0">Hospital</option>
-            <option value="1">Stadium</option>
-            <option value="2">School complex</option>
-            <option value="3">Others</option>
+          <option selected>Select value</option>
+                <option value='0'>Primary</option>
+                <option value='1'>Seconday</option>
+                <option value='2'>Others</option>
 
           </select>
         </div>
