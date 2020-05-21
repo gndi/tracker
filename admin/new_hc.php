@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
 
-  if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($power) and isset($state) and isset($adress)) {
+  if (isset($name) and isset($lon) and isset($lat) and isset($power) and isset($state)) {
 
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
@@ -298,8 +298,6 @@ if (isset($_GET['user'])) {
           </div>
         </div>
 
-
-
         <!--readiness 7,15 -->
 
         <div class="col-md-12">
@@ -324,11 +322,7 @@ if (isset($_GET['user'])) {
           </div>
         </div>
 
-
-
         <!-- 8,9,13 -->
-
-
         <div class="col-md-12">
           <div class=" row">
             <div class="form-group col-md-4">
