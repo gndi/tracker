@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO `hc` ( `name`, `info`, `power`, `icu`, `available_beds`, `phone`, `phone2`, `lon`, `lat`, `adress`, `state`, `owner_name`, `owner_contact`, `project_manager`, `stakeholders`, `i_teams`, `r_t_contacts`, `medical_usage`, `building_status`, `owner_acceptance`, `resistnce_acceptance`, `readiness_status`, `building_type`, `init_budget`, `e_f_date`, `i_date`, `state_`, `locality`,`img`) VALUES ( '$name', '$info', $power, '$phone', , '$icu', '$available_beds', '$phone2', $lon, $lat, '$adress', 0, '$owner_name', '$owner_contact', '$project_manager', '$stakeholders', '$i_teams', '$r_t_contacts', $medical_usage, $building_status, $owner_acceptance, $resistnce_acceptance, $readiness_status, $building_type, $init_budget, '$e_f_date', '$i_date', '$state_', '$locality','$img')";
 
 
-    $res = mysqli_query($db, $sql);
+    $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
     if ($res) {
       $success = true;
     } else {
