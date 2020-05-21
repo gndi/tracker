@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
 
-  if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($power) and isset($phone) and isset($phone2) and  isset($state) and isset($adress)) {
+  if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($power) and isset($state) and isset($adress)) {
 
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
@@ -198,15 +198,15 @@ if (isset($_GET['user'])) {
         </div>
         <div class="form-group col-md-12">
           <label for="owner_name">Owner Name</label>
-          <input required type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
+          <input  type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
         </div>
         <div class="form-group col-md-12">
           <label for="owner_contact">Owner Contact </label>
-          <input required type="text" class="form-control" name="owner_contact" id="owner_contact" placeholder="">
+          <input  type="text" class="form-control" name="owner_contact" id="owner_contact" placeholder="">
         </div>
         <div class="form-group col-md-12">
           <label for="project_manager">Project Manager</label>
-          <input required type="text" class="form-control" name="project_manager" id="project_manager" placeholder="">
+          <input  type="text" class="form-control" name="project_manager" id="project_manager" placeholder="">
         </div>
 
 
@@ -238,19 +238,15 @@ if (isset($_GET['user'])) {
           </div>
         </div>
 
-
-
-
-
         <div class="col-md-12">
           <div class=" row">
             <div class="form-group col-md-6">
               <label for="needs">Phone</label>
-              <input required class="form-control" name="phone" id="needs"></textarea>
+              <input  class="form-control" name="phone" id="needs"></textarea>
             </div>
             <div class="form-group col-md-6">
               <label for="needs">Another Phone </label>
-              <input required class="form-control" name="phone2" id="needs"></textarea>
+              <input class="form-control" name="phone2" id="needs"></textarea>
             </div>
           </div>
         </div>
@@ -266,7 +262,6 @@ if (isset($_GET['user'])) {
                 <option value='0' selected>Isolation</option>
                 <option value='1'>Self isolation </option>
                 <option value='2'>Medical staff</option>
-
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -315,7 +310,6 @@ if (isset($_GET['user'])) {
                 <option value='0' selected>Not ready</option>
                 <option value='1'>Ready needs approval </option>
                 <option value='2'>Ready </option>
-
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -325,7 +319,6 @@ if (isset($_GET['user'])) {
                 <option value='0'>Primary</option>
                 <option value='1'>Secondary</option>
                 <option value='2'>Others</option>
-
               </select>
             </div>
           </div>
@@ -340,27 +333,18 @@ if (isset($_GET['user'])) {
           <div class=" row">
             <div class="form-group col-md-4">
               <label for="init_budget">Initial budget in SDG</label>
-              <input required type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
+              <input type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
             </div>
             <div class="form-group col-md-4">
               <label for="e_f_date">Expected finishing date</label>
-              <input required type="date" class="form-control" name="e_f_date" id="e_f_date" placeholder="" value="">
+              <input  type="date" class="form-control" name="e_f_date" id="e_f_date" placeholder="" value="">
             </div>
             <div class="form-group col-md-4">
               <label for="i_date">Inspection date</label>
-              <input required type="date" class="form-control" name="i_date" id="i_date" placeholder="" value="">
+              <input  type="date" class="form-control" name="i_date" id="i_date" placeholder="" value="">
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
 
         <!-- States Localitis -->
 
@@ -447,18 +431,11 @@ if (isset($_GET['user'])) {
                                 </div>";
           }
         }
-
-
-
         ?>
         <div class="col-md-12">
           <button type="submit" class="btn btn-primary col-md-12">Save Case</button>
         </div>
       </form>
-
-
-
-
     </div>
 
   </div>
