@@ -326,7 +326,7 @@ if (isset($_GET['user'])) {
           <div class=" row">
             <div class="form-group col-md-4">
               <label for="init_budget">Initial budget in SDG</label>
-              <input type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="">
+              <input type="number" class="form-control" name="init_budget" id="init_budget" placeholder="" value="0">
             </div>
             <div class="form-group col-md-4">
               <label for="e_f_date">Expected finishing date</label>
