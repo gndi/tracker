@@ -39,7 +39,6 @@ if ($login_permission == 1 or $login_permission == 0 or $login_permission == 10)
 }
 
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['name']));
   $patient_name = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_name']));
@@ -65,6 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $accordance = htmlspecialchars(mysqli_real_escape_string($db, $_POST['accordance']));
   $patient_condition = htmlspecialchars(mysqli_real_escape_string($db, $_POST['patient_condition']));
   $recent_travel = htmlspecialchars(mysqli_real_escape_string($db, $_POST['recent_travel']));
+
+  
+  $clinical_picture = $_POST['clinical_picture'];
+  $comorobidities = $_POST['comorobidities'];
   // leave this for other form
   /*$reference_number = htmlspecialchars(mysqli_real_escape_string($db, $_POST['reference_number']));
   $result = htmlspecialchars(mysqli_real_escape_string($db, $_POST['result']));
@@ -74,26 +77,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   mysqli_query($db, "SET NAMES 'utf8'");
   mysqli_query($db, 'SET CHARACTER SET utf8');
 
-  $sql = "INSERT INTO `labs` (`name`,`patient_name`,`gender`,`patient_age`,`ethnicity`,`phone_number`,`patient_address`,`case_type`,`physician_name`,`physician_mobile`,`sample_type`,`test_reason`,`sample_day`,`collection_date`,`accordance`,`patient_condition`,`clinical_picture`,`recent_travel`,`comorobidities`,`additional_comments`, `to_lab`, `patient_arrival_date`, `contact_with_case`) VALUES ('$name','$patient_name','$gender','$patient_age','$ethnicity','$phone_number','$patient_address','$case_type','$physician_name','$physician_mobile','$sample_type','$test_reason','$sample_day','$collection_date','$accordance','$patient_condition','$clinical_picture','$recent_travel','$comorobidities','$additional_comments','$to_lab', '$arrival_date', '$with_cases')";
-  $res = mysqli_query($db, $sql);
-  $count = mysqli_num_rows($res);
+  $sql = "INSERT INTO `labs` (`name`,`patient_name`,`gender`,`patient_age`,`ethnicity`,`phone_number`,`patient_address`,`case_type`,`physician_name`,`physician_mobile`,`sample_type`,`test_reason`,`sample_day`,`collection_date`,`accordance`,`patient_condition`,`recent_travel`,`comorobidities`,`additional_comments`, `patient_arrival_date`, `contact_with_case`) VALUES ('$name','$patient_name','$gender','$patient_age','$ethnicity','$phone_number','$patient_address','$case_type','$physician_name','$physician_mobile','$sample_type','$test_reason','$sample_day','$collection_date','$accordance','$patient_condition','$recent_travel','$comorobidities','$additional_comments', '$arrival_date', '$with_cases')";
+  
+  $result = mysqli_query($db, $sql);
+  mysqli_free_result($res);
+
+
+  $q = "SELECT count(*) as count from labs";
+  $re = mysqli_query($db, $q);
+  $row = mysqli_fetch_assoc($re);
+  $count = $row['count'];
+
+
+  error_log($count);
   
   // insert into clinical picture
 
-  $clinical_picture = $_POST['clinical_picture'];
-  $comorobidities = $_POST['comorobidities'];
 
   $com = createArray(6, $comorobidities);
   $comVal = implode(',', $com);
 
   $valuearr = createArray(12, $clinical_picture);
   $values = implode(',', $valuearr);
-  $lab_id =
   $in = join(',', array_fill(0, count($values), '?'));
   $sql = "insert into clinical_picture (`lab_id`, `asymptomatic`,`urti`,`pneumonina`,`fever` ,`cough`,`sob`,`treatment`,`supportive`,`compassionate`,`clinical_trial`,`no_treatment`,`other`) values ($count, $values)";
 
   $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
 
+  mysqli_free_result($res);
   // comorobidities
   $sql = "insert into comorobidities(`lab_id`, `dm`, `htn`, `asthma`, `cardiac`, `renal`, `other`) values($count, $comVal)";
   $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
@@ -148,6 +159,7 @@ if (isset($_GET['user'])) {
 
 
 ?>
+
 <style>
   .ol-popup {
     position: absolute;
@@ -206,9 +218,30 @@ if (isset($_GET['user'])) {
 
     <div style="overflow-x:auto;height:450px;" id="form">
       <form method="post" accept-charset="utf-8">
+
+      <div class="form-group col-md-12">
+          <label for="exampleFormControlInput1">Patient profile</label>
+
+          <select class="form-control" name="patient_id" id="gender">
+          <option selected>Select a patient from the drop down menu</option>
+          <?php 
+          mysqli_query($db, "SET NAMES 'utf8'");
+          mysqli_query($db, 'SET CHARACTER SET utf8');
+          $q = "select * from cases";
+          $res = mysqli_query($db, $q);
+          while ($row = mysqli_fetch_array($res)){
+            $id = $row["id"];
+            $name = $row["name"];
+            echo "<option value=".$id.">".$name."</option>";
+          }
+          
+          ?>
+          </select>
+        </div>
+
         <div class="form-group col-md-12">
           <label for="exampleFormControlInput1">Name (hosptial, lab, or other)</label>
-          <input required type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Quarantine Name">
+          <input required type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Lab / Hospital Name">
         </div>
 
         <div class="form-group col-md-12">
@@ -305,12 +338,12 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="collection-date">Collection date</label>
-          <input required type="date" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
+          <input required type="datetime-local" class="form-control" name="collection_date" id="collection-date" placeholder="Collection date">
         </div>
 
         <div class="form-group col-md-12">
           <label for="date-to-lab">Date sent to laboratory</label>
-          <input required type="date" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
+          <input required type="datetime-local" class="form-control" name="to_lab" id="date-to-lab" placeholder="Date to lab">
         </div>
 
         <div class="form-group col-md-12">
@@ -373,7 +406,7 @@ if (isset($_GET['user'])) {
 
         <div class="form-group col-md-12">
           <label for="patient-arrival-date">Patient arrival date</label>
-          <input required type="date" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
+          <input required type="datetime-local" class="form-control" name="patient_arrival_date" id="patient-arrival-date" placeholder="">
         </div>
 
         <div class="form-group col-md-12">
@@ -434,9 +467,6 @@ if (isset($_GET['user'])) {
                                 </div>";
           }
         }
-
-
-
         ?>
 
         <div class="col-md-12">

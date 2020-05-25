@@ -24,14 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $state_ = htmlspecialchars(mysqli_real_escape_string($db, $_POST['state_']));
   $locality = htmlspecialchars(mysqli_real_escape_string($db, $_POST['locality']));
 
-
+  $patient_code = substr(md5(uniqid(rand(), true)), 0, 10);
 
   if (isset($name) and isset($lon) and isset($info) and isset($lat) and isset($hc_name) and isset($phone) and isset($phone2) and isset($type) and isset($state) and isset($adress)) {
 
     mysqli_query($db, "SET NAMES 'utf8'");
     mysqli_query($db, 'SET CHARACTER SET utf8');
     //$sql = "INSERT INTO `tasks` (`location`, `f_userid`, `userid`, `title`, `info`, `datetime`, `state`) VALUES (GeomFromText('POINT($lon $lat)'), $f_user , $u_user, '$title', '$info', now(),  0)" ;
-    $sql = "INSERT INTO `cases` ( `name`, `datetime`, `info`, `adress`, `hc_name`, `hc_id`, `state`, `lon`, `lat`, `type`, `phone`, `phone2`,`state_`,`locality`) VALUES ( '$name', now(), '$info', '$adress', '$hc_name', $hc_id, $state, $lon, $lat, $type, '$phone', '$phone2','$state_','$locality')";
+    $sql = "INSERT INTO `cases` ( `name`, `datetime`, `info`, `adress`, `hc_name`, `hc_id`, `state`, `lon`, `lat`, `type`, `phone`, `phone2`,`state_`,`locality`, `patient_code`) VALUES ( '$name', now(), '$info', '$adress', '$hc_name', $hc_id, $state, $lon, $lat, $type, '$phone', '$phone2','$state_','$locality', '$patient_code')";
 
     $res = mysqli_query($db, $sql) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
     if ($res) {

@@ -64,3 +64,8 @@ create table clinical_picture (
  alter table users add locality_id integer default 0;
 
  alter table notifications alter p3 set default 0;
+
+ alter table cases add patient_code varchar(20);
+ alter table labs add patient_code varchar(20);
+ alter table cases add is_tested bool;
+ alter table cases add result_id integer;
