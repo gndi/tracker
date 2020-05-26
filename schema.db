@@ -69,3 +69,6 @@ create table clinical_picture (
  alter table labs add patient_code varchar(20);
  alter table cases add is_tested bool;
  alter table cases add result_id integer;
+ alter table cases add is_positive bool;
+
+ alter table cases alter is_tested set default 0;

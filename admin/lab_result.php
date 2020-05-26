@@ -9,6 +9,27 @@ if ($login_permission == 2 or $login_permission == 0) {
 ?>
 
 
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // post request
+  $case_id = $_POST["case_id"];
+  $value = $_POST["result"];
+  // if (isset($value)){
+  //   if ($value != 0 or $value != 1){
+  //     return;
+  //   }
+  // }
+
+  $q = "update cases set is_positive = $value, is_tested = 1 where id = '$case_id'";
+  $res = mysqli_query($db, $q);
+  header("location:./index.php");
+
+}
+
+
+?>
+
+
 <style>
   #monitortable {
     font-size: 10pt;
@@ -75,10 +96,9 @@ if ($login_permission == 2 or $login_permission == 0) {
   <thead>
   <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Physician name</th>
-      <th scope="col">Collection date</th>
-      <th scope="col">Patient code</th>
+      <th scope="col">Case ID</th>
+      <th scope="col">Set Case Result</th>
+
     </tr>
   </thead>
 
@@ -87,28 +107,46 @@ if ($login_permission == 2 or $login_permission == 0) {
 <?php
 mysqli_query($db, "SET NAMES 'utf8'");
 mysqli_query($db, 'SET CHARACTER SET utf8');
-$q = "select * from cases";
+$q = "select * from cases where is_tested != 1";
 $res = mysqli_query($db, $q);
 $id = "id";
-$name = "name";
-$ethnicity = "ethnicity";
-$physician_name = "physician_name";
-$collection_date = "collection_date";
-$patient_code = "patient_code";
+$name = "patient_code";
+$ethnicity = "result_id";
 
    while ($row = mysqli_fetch_array($res)) { 
     echo "<tr>
         <td> ". $row[$id] ." </td>
-        <td>" . $row[$name] . "</td>
-        <td>" . $row[$ethnicity] . "</td>
-        <td>" . $row[$physician_name] . "</td>
-        <td>" . $row[$collection_date] . "</td>
-        <td>" . $row[$patient_code] . "</td>
+        <td> ".$row["patient_code"]." </td>
+        <td>
+        <div class='form-group'>
+            <select class='form-control' id='result'>
+            <option selected>Carefully set the result</option>
+            <option value=0>NEGATIVE RESULT</option>
+            <option value=1>POSITIVE RESULT</option>
+            </select>
+            <button type='submit' class='btn btn-primary mb-2' onClick='submitCase(". $row[$id] .")'>Submit result</button>
+        </div>
+      </td>
       </tr>"; 
    }
   ?>
 
 </tbody>
+</table>
+
+<script>
+
+function submitCase(v) {
+  var e = document.getElementById("result");
+  var result = e.options[e.selectedIndex].value;
+  var data = new FormData();
+  data.append("result", result)
+  data.append("case_id", v)
+  fetch("/admin/lab_result.php", {method: 'POST', body: data})
+
+}
+
+</script>
 
   <?php
   include('./footer.php');
