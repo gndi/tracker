@@ -22,8 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $q = "update cases set is_positive = $value, is_tested = 1 where id = '$case_id'";
   $res = mysqli_query($db, $q);
-  header("location:./index.php");
-
+  return;
 }
 
 
@@ -107,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 mysqli_query($db, "SET NAMES 'utf8'");
 mysqli_query($db, 'SET CHARACTER SET utf8');
-$q = "select * from cases where is_tested != 1";
+$q = "select * from cases where is_tested != 1 order by id";
 $res = mysqli_query($db, $q);
 $id = "id";
 $name = "patient_code";
@@ -142,8 +141,13 @@ function submitCase(v) {
   var data = new FormData();
   data.append("result", result)
   data.append("case_id", v)
-  fetch("/admin/lab_result.php", {method: 'POST', body: data})
-
+  fetch("/admin/lab_result.php", {method: 'POST', body: data}).then(response=>{
+    console.log("The response is: ", response);
+    window.location.reload();
+  })
+  
+  // window.location.reload();
+  
 }
 
 </script>
