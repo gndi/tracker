@@ -3,8 +3,6 @@
     <tr>
       <th scope="col">#ID</th>
       <th scope="col">Name</th>
-
-
       <th scope="col">Adress</th>
       <th scope="col">Phone</th>
       <th scope="col">A. Phone</th>

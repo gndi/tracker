@@ -65,6 +65,7 @@ if (isset($_GET['user'])) {
 
 
 ?>
+
 <style>
   .ol-popup {
     position: absolute;

@@ -2,7 +2,7 @@
 include('../config.php');
 include('./session.php');
 include('./header.php');
-if ($login_permission == 2 or $login_permission == 0) {
+if ($login_permission == 2 or $login_permission == 0 or $login_permission == 10) {
 } else {
   header("location:./index.php");
 }

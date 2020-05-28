@@ -197,6 +197,7 @@ if ($login_permission == 3 or $login_permission == 0) {
       anchor: [0.5, 1],
       src: '../images/ambulans20.png'
     });
+    
     var style = new ol.style.Style({
       image: new ol.style.Icon({
         anchor: [0.5, 1],
@@ -333,11 +334,13 @@ if ($login_permission == 3 or $login_permission == 0) {
       };
       xhr.send();
     }
+
     closer.onclick = function() {
       overlay.setPosition(undefined);
       closer.blur();
       return false;
     };
+
     map.on('singleclick', function(evt) {
       var coordinate = evt.coordinate;
       map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
