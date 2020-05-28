@@ -18,7 +18,7 @@ if (isset($_GET[$name])){
 	}else{
 		$q = "UPDATE `cases` SET `$name`=".$el[$name]." WHERE id=$id " ;
 	}
-mysqli_query($db,$q);
+mysqli_query($db,$q) or trigger_error("Query Failed! SQL: $sql - Error: " . mysqli_error($db), E_USER_ERROR);
 
 }
 

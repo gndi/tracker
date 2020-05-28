@@ -2,7 +2,7 @@
 include('../config.php');
 include('./session.php');
 include('./header.php');
-if ($login_permission == 3 or $login_permission == 0) {
+if ($login_permission == 3 or $login_permission == 0 or $login_permission == 12) {
 } else {
   header("location:./index.php");
 }
@@ -197,7 +197,7 @@ if ($login_permission == 3 or $login_permission == 0) {
       anchor: [0.5, 1],
       src: '../images/ambulans20.png'
     });
-    
+
     var style = new ol.style.Style({
       image: new ol.style.Icon({
         anchor: [0.5, 1],

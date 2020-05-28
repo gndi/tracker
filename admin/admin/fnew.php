@@ -144,6 +144,7 @@ SELECT '$username', '$name','$password',$permission,'$password',0,'$about','$pho
               <option value='10'>Labs</option>
               <option value='6'>Locality administrator</option>
               <option value='7'>Call center admin</option>
+              <option value='12'>Sample Collector</option>
             </select>
           </div>
 

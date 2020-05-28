@@ -38,11 +38,11 @@
     $loc = mysqli_real_escape_string($db, $_GET['loc']);
     mysqli_query($db, "set names utf8");
     if ($state_ == '') {
-      $q = "SELECT * FROM `cases` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state = -1) order by id ";
+      $q = "SELECT * FROM `cases` WHERE (name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state = -1)  or ambulance_status != 1 or ambulance_status is null order by id ";
     } elseif ($loc == '') {
-      $q = "SELECT * FROM `cases` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) AND (state = -1) order by id";
+      $q = "SELECT * FROM `cases` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' ) ) AND (state = -1) or ambulance_status != 1 or ambulance_status is null order by id ";
     } else {
-      $q = "SELECT * FROM `cases` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc') ) AND (state = -1) order by id ";
+      $q = "SELECT * FROM `cases` WHERE ((name LIKE '%$q%' OR info LIKE '%$q%' OR phone LIKE '%$q%' OR phone2 LIKE '%$q%' OR adress LIKE '%$q%') AND (state_ = '$state_' AND locality = '$loc') ) AND (state = -1) or ambulance_status != 1 or ambulance_status is null order by id ";
     }
 
     $result = mysqli_query($db, $q);
@@ -75,14 +75,21 @@
 
       $i = 0;
       $h = '';
+      $resolve = '';
 
       $q = "SELECT * FROM `users` WHERE permission=3 ";
       $result1 = mysqli_query($db, $q);
+      $status = '';
 
 
       while ($row1 = mysqli_fetch_assoc($result1)) {
         $i = $row1['id'];
-        $h .= "<a class='dropdown-item' href='./set_case_val.php?bring_by=" . $i . "&id=" . $id . "'>Assign to : " . getmanager_name($db, $i) . "</a>";
+        if ($login_permission == 12) {
+          $h .= "<a class='btn btn-primary' href='./set_case_val.php?bring_by=$i&ambulance_status=1&id=$id' role='button'>Mark as sample taken</a>";
+
+        }else {
+          $h .= "<a class='dropdown-item' href='./set_case_val.php?bring_by=" . $i . "&id=" . $id . "'>Assign to : " . getmanager_name($db, $i) . "</a>";
+        }
         $i += 1;
       };
       $h1 = "<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -90,6 +97,7 @@
   </button>
   <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
     " . $h . "
+  
   </div>";
 
 
@@ -99,8 +107,8 @@
       <td>$name</td>
      
     <td>$adress</td>
-    <td>$phone</td>
-    <td>$phone2</td>
+    <td><a href='tel:$phone'>$phone</a></td>
+    <td><a href='tel:$phone2'>$phone2</a></td>
     
     <td><a href='#' onclick= \" map.setView(new ol.View({ center: ol.proj.fromLonLat([$lon,$lat], 'EPSG:3857'), zoom: 15 })); \" > <img src='../images/$icon' width='20px' height='20px' /></a> <a href='http://maps.google.com/maps?daddr=$lat,$lon'><img src='../images/on.png' width='20px' height='20px' /> </a> $h1 </td>
     </tr>";

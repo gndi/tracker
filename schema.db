@@ -72,3 +72,7 @@ create table clinical_picture (
  alter table cases add is_positive bool;
 
  alter table cases alter is_tested set default 0;
+
+ // new ambulance_status
+
+ alter table cases add ambulance_status integer;
