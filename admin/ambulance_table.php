@@ -85,10 +85,10 @@
       while ($row1 = mysqli_fetch_assoc($result1)) {
         $i = $row1['id'];
         if ($login_permission == 12) {
-          $h .= "<a class='btn btn-primary' href='./set_case_val.php?bring_by=$i&ambulance_status=1&id=$id' role='button'>Mark as sample taken</a>";
+          $h = "<a class='btn btn-primary' href='./set_case_val.php?bring_by=$i&ambulance_status=1&id=$id' role='button'>Mark as sample taken</a>";
 
         }else {
-          $h .= "<a class='dropdown-item' href='./set_case_val.php?bring_by=" . $i . "&id=" . $id . "'>Assign to : " . getmanager_name($db, $i) . "</a>";
+          $h = "<a class='dropdown-item' href='./set_case_val.php?bring_by=" . $i . "&id=" . $id . "'>Assign to : " . getmanager_name($db, $i) . "</a>";
         }
         $i += 1;
       };
