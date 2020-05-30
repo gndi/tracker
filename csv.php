@@ -1,6 +1,10 @@
 <?php
 include './config.php';
 include './admin/session.php';
+
+use PhpSpreadsheet\Spreadsheet;
+use PhpSpreadsheet\Writer\Xls;
+
 error_log($login_permission);
 
 if ($login_permission == 0 or $login_permission == 6) {
@@ -34,13 +38,13 @@ while ($fieldinfo = mysqli_fetch_field($res)) {
 }
 
 $fp = fopen('php://output', 'w');
-fwrite($fp, pack("CCC", 0xef, 0xbb, 0xbf)); // add utf support, very hacky but it should do it
+//fwrite($fp, pack("CCC", 0xef, 0xbb, 0xbf)); // add utf support, very hacky but it should do it
 fputcsv($fp, $headers);
 
 while ($row = mysqli_fetch_assoc($res)) {
     
     if ($fp) {
-        header('Content-Type: text/csv');
+        header('Content-Type: text/csv ; charset=ANSI');
         header("Content-Disposition: attachment; filename=$filename");
         header('Pragma: no-cache');
         header('Expires: 0');

@@ -318,7 +318,7 @@ if ($login_permission == 3 or $login_permission == 0 or $login_permission == 12)
       var cookie;
       cookie = getCookie('cookie');
 
-      xhr.open('GET', '<?php echo $sitelink; ?>admin/ambulance_table.php?cookie=' + cookie + '&q=' + q + '&state=' + st1 + '&loc=' + loc1, true);
+      xhr.open('GET', '<?php echo $sitelink; ?>admin/ambulance_table.php?cookie=' + cookie + '&q=' + q + '&state=' + st1 + '&loc=' + loc1+'&user=<?php if($login_permission==3){echo $user_id;}; ?>', true);
       xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return;
         if (this.status !== 200) return; // or whatever error handling you want

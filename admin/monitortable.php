@@ -101,6 +101,7 @@
       $q = "SELECT * FROM `hc` ";
       $h = '';
       $re = mysqli_query($db, $q);
+      $h .= "<a class='dropdown-item' href='./not_to_case.php?hc=-1&id=" . $id . "'>Send Case to : Home Isolation</a>";
       while ($row = mysqli_fetch_assoc($re)) {
         $hc_n = $row['name'];
         $hc_id = $row['id'];
