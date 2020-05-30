@@ -51,15 +51,15 @@
 
         if ($login_permission == 10) {
           echo '<li id="issues" class="nav-item ">
-                  <a class="nav-link" href="/admin/new_lab.php"><img src="../images/hospital_off.png" width="25px" height="25px" />New Lab Sample <span class="sr-only"></span></a>
+                  <a class="nav-link" href="/admin/new_lab.php"><img src="../images/newlab.png" width="25px" height="25px" />New Lab Sample <span class="sr-only"></span></a>
                 </li>
 
                 <li id="new-lab" class="nav-item ">
-                  <a class="nav-link" href="/admin/view_lab.php"><img src="../images/hospital_off.png" width="25px" height="25px" />View lab forms <span class="sr-only"></span></a>
+                  <a class="nav-link" href="/admin/view_lab.php"><img src="../images/lab.png" width="25px" height="25px" />View lab forms <span class="sr-only"></span></a>
                 </li>
 
                 <li id="lab-results" class="nav-item ">
-                <a class="nav-link" href="/admin/lab_result.php">Submit lab result</a>
+                <a class="nav-link" href="/admin/lab_result.php"> <img src="../images/labres.png" width="25px" height="25px" />Submit lab result</a>
               </li>
                 
                 
